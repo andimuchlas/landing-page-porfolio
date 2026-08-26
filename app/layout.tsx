@@ -14,9 +14,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NOVA//LAB — We Build Digital Worlds",
+  title: "Andi Muchlas — Backend & Spatial Systems Engineer",
   description:
-    "NOVA//LAB is a fictional software house and creative technology studio building digital products, intelligent systems, spatial technology and interactive worlds.",
+    "Andi Muchlas is a backend engineer specializing in spatial computing, high-throughput APIs and distributed systems — routing engines, geospatial ETL pipelines and low-latency microservices.",
   icons: { icon: "/assets/image/Logo.png" },
 };
 

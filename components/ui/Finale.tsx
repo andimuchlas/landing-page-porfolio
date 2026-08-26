@@ -6,6 +6,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { S, prefersReducedMotion } from "@/lib/state";
 import { smoothstep, lerp } from "@/lib/utils";
 import { scrollTo } from "@/components/SmoothScroll";
+import { LINKS } from "@/lib/content";
 import MagneticButton from "@/components/fx/MagneticButton";
 import MachineAssembly from "@/components/experience/scenes/MachineAssembly";
 
@@ -80,7 +81,7 @@ function MachineSection() {
           className="pointer-events-none absolute bottom-16 left-1/2 z-10 -translate-x-1/2 text-center opacity-0"
         >
           <div className="font-display font-expanded text-[clamp(1.6rem,4vw,3.2rem)]">
-            NOVA<span className="text-accent">{'//'}</span>LAB
+            ANDI<span className="text-accent">{'//'}</span>MUCHLAS
           </div>
           <div className="mt-3 font-tech text-[10px] tracking-[0.5em] text-dim">
             BUILD SOMETHING WORTH REMEMBERING.
@@ -121,13 +122,13 @@ function CTA() {
         [ READY WHEN YOU ARE ]
       </p>
       <h2 className="font-display font-expanded text-[clamp(2.8rem,9vw,7.5rem)] leading-[0.95]">
-        <span className="cta-line block">HAVE AN IDEA?</span>
+        <span className="cta-line block">HAVE A PROJECT?</span>
         <span className="cta-line block text-chrome">
-          LET&apos;S MAKE IT REAL<span className="text-accent">.</span>
+          LET&apos;S BUILD IT<span className="text-accent">.</span>
         </span>
       </h2>
       <MagneticButton
-        href="mailto:hello@novalab.studio"
+        href="mailto:andimuchlas156@gmail.com?subject=Project%20Inquiry"
         className="group mt-14 rounded-full border border-accent px-10 py-4 font-tech text-xs tracking-[0.3em] text-accent transition-colors duration-300 hover:bg-accent hover:text-black"
       >
         START A PROJECT →
@@ -136,83 +137,43 @@ function CTA() {
   );
 }
 
-const FOOTER_LINKS = [
-  { label: "SERVICES", href: "#services" },
-  { label: "WORK", href: "#work" },
-  { label: "PROCESS", href: "#process" },
-  { label: "GAME", href: "#game" },
-];
-
 function Footer() {
   return (
-    <footer className="border-t border-white/8 px-6 py-12 md:px-16">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:items-start md:justify-between">
-        <div>
-          <span className="flex items-center gap-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/image/Logo.png"
-              alt=""
-              className="h-8 w-auto mix-blend-screen"
-            />
-            <span className="font-tech text-sm font-bold tracking-[0.25em] text-ink">
-              NOVA<span className="text-accent">{"//"}</span>LAB
-            </span>
-          </span>
-          <p className="mt-4 max-w-xs font-tech text-[10px] leading-relaxed tracking-[0.15em] text-dim">
-            SOFTWARE HOUSE × CREATIVE TECHNOLOGY STUDIO — BUILDING DIGITAL
-            WORLDS FROM JAKARTA.
-          </p>
-        </div>
+    <footer className="border-t border-white/8 px-6 py-7 md:px-16">
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 font-tech text-[10px] tracking-[0.2em] text-dim md:flex-row md:items-center md:justify-between">
+        <span>© 2026 ANDI MUCHLAS</span>
 
-        <nav aria-label="Footer navigation">
-          <p className="mb-4 font-tech text-[10px] tracking-[0.35em] text-dim">
-            NAVIGATE
-          </p>
-          <ul className="space-y-2.5">
-            {FOOTER_LINKS.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollTo(l.href);
-                  }}
-                  className="font-tech text-[11px] tracking-[0.2em] text-ink/80 transition-colors hover:text-accent"
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div>
-          <p className="mb-4 font-tech text-[10px] tracking-[0.35em] text-dim">
-            CONNECT
-          </p>
+        <span className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <a
-            href="mailto:hello@novalab.studio"
-            className="font-tech text-[11px] tracking-[0.2em] text-ink/80 underline-offset-4 transition-colors hover:text-accent hover:underline"
+            href={`mailto:${LINKS.email}`}
+            className="text-ink/80 transition-colors hover:text-accent"
           >
-            HELLO@NOVALAB.STUDIO
+            EMAIL ↗
           </a>
-          <p className="mt-3 font-tech text-[10px] tracking-[0.2em] text-dim">
-            JAKARTA · 6.2088°S 106.8456°E
-          </p>
+          <a
+            href={LINKS.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="text-ink/80 transition-colors hover:text-accent"
+          >
+            LINKEDIN ↗
+          </a>
+          <a
+            href={LINKS.website}
+            target="_blank"
+            rel="noreferrer"
+            className="text-ink/80 transition-colors hover:text-accent"
+          >
+            ANDI.IS-A.DEV ↗
+          </a>
           <button
             type="button"
             onClick={() => scrollTo("#hero")}
-            className="mt-5 block font-tech text-[10px] tracking-[0.3em] text-dim transition-colors hover:text-accent"
+            className="text-dim transition-colors hover:text-accent"
           >
             BACK TO TOP ↑
           </button>
-        </div>
-      </div>
-
-      <div className="mx-auto mt-10 flex max-w-6xl flex-col gap-2 border-t border-white/8 pt-6 font-tech text-[10px] tracking-[0.2em] text-dim md:flex-row md:items-center md:justify-between">
-        <span>© 2026 NOVA//LAB — A FICTIONAL STUDIO</span>
-        <span>NEXT.JS · R3F · GSAP</span>
+        </span>
       </div>
     </footer>
   );

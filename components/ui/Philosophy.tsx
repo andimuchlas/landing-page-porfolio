@@ -8,11 +8,11 @@ const LINES: {
   text: string;
   anim: "left" | "right" | "scale" | "fade" | "final";
 }[] = [
-  { text: "WE DON'T", anim: "left" },
+  { text: "I DON'T", anim: "left" },
   { text: "JUST WRITE", anim: "right" },
-  { text: "SOFTWARE.", anim: "scale" },
-  { text: "WE BUILD", anim: "fade" },
-  { text: "EXPERIENCES.", anim: "final" },
+  { text: "CODE.", anim: "scale" },
+  { text: "I BUILD", anim: "fade" },
+  { text: "SYSTEMS.", anim: "final" },
 ];
 
 const fromVars = {

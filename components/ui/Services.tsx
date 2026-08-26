@@ -10,27 +10,27 @@ import ServicesScene from "@/components/experience/scenes/ServicesObjects";
 const SERVICES = [
   {
     n: "01",
-    title: ["DIGITAL", "PRODUCTS"],
-    tags: ["Web", "Mobile", "SaaS", "Platforms"],
-    desc: "Products people actually want to use — engineered end to end.",
+    title: ["SPATIAL", "SYSTEMS"],
+    tags: ["GIS", "UBER H3", "OSRM", "POSTGIS"],
+    desc: "Routing engines, geospatial ETL and hexagonal indexing — making the physical world computable.",
   },
   {
     n: "02",
-    title: ["INTELLIGENT", "SYSTEMS"],
-    tags: ["AI", "Automation", "Data", "Infrastructure"],
-    desc: "Systems that learn, decide and never sleep.",
+    title: ["HIGH-THROUGHPUT", "APIS"],
+    tags: ["GRPC", "BUN", "HONO", "REDIS"],
+    desc: "Low-latency gateways engineered for concurrent load.",
   },
   {
     n: "03",
-    title: ["SPATIAL", "SYSTEMS"],
-    tags: ["GIS", "Maps", "Simulation", "Digital Twin"],
-    desc: "We make the physical world computable.",
+    title: ["DISTRIBUTED", "SYSTEMS"],
+    tags: ["NATS", "BULLMQ", "KUBERNETES", "DOCKER"],
+    desc: "Async pipelines and microservices that fail gracefully.",
   },
   {
     n: "04",
-    title: ["INTERACTIVE", "WORLDS"],
-    tags: ["Games", "XR", "Simulation", "Interactive Media"],
-    desc: "Not content. Places people go.",
+    title: ["INTELLIGENT", "ROUTING"],
+    tags: ["LLM", "PYTORCH", "DISTILBERT", "FASTAPI"],
+    desc: "Model orchestration that balances cost against latency.",
   },
 ];
 
@@ -156,7 +156,7 @@ export default function Services() {
         </div>
 
         <p className="absolute bottom-8 left-6 z-10 font-tech text-[11px] tracking-[0.35em] text-dim md:left-16">
-          01 — WHAT WE DO
+          01 — EXPERTISE
         </p>
       </div>
     </section>

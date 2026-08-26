@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { lockPageScroll, scrollTo } from "@/components/SmoothScroll";
 
 const LINKS = [
-  { label: "SERVICES", href: "#services" },
+  { label: "EXPERTISE", href: "#services" },
   { label: "WORK", href: "#work" },
   { label: "PROCESS", href: "#process" },
-  { label: "GAME", href: "#game" },
+  { label: "WORLDS", href: "#game" },
 ];
 
 export default function Navbar() {
@@ -46,8 +46,8 @@ export default function Navbar() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/assets/image/Logo.png" alt="" className="h-9 w-auto" />
-            <span className="font-tech text-sm font-bold tracking-[0.25em] text-white">
-              NOVA<span className="text-accent">{"//"}</span>LAB
+            <span className="font-tech text-xs font-bold tracking-[0.25em] text-white md:text-sm">
+              ANDI<span className="text-accent">{"//"}</span>MUCHLAS
             </span>
           </a>
 

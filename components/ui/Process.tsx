@@ -95,9 +95,9 @@ function EvolveViz() {
 /* ------------------------------- stages ------------------------------- */
 
 const STAGES = [
-  { n: "01", title: "DISCOVER", blurb: "Research, audits, and hard questions before any pixels.", viz: <DiscoverViz /> },
-  { n: "02", title: "DEFINE", blurb: "Scope, risks, KPIs. A plan that survives contact with reality.", viz: <DefineViz /> },
-  { n: "03", title: "DESIGN", blurb: "Wireframes evolve into interfaces people feel.", viz: <DesignViz /> },
+  { n: "01", title: "DISCOVER", blurb: "Audits, constraints and hard questions before any architecture.", viz: <DiscoverViz /> },
+  { n: "02", title: "DEFINE", blurb: "Scope, risks, SLIs. A plan that survives contact with reality.", viz: <DefineViz /> },
+  { n: "03", title: "DESIGN", blurb: "Domain models and contracts before a single endpoint ships.", viz: <DesignViz /> },
   { n: "04", title: "BUILD", blurb: "Code becomes product. Sprints ship working software.", viz: <BuildViz /> },
   { n: "05", title: "SHIP", blurb: "Pipelines, observability, zero-drama deployments.", viz: <ShipViz /> },
   { n: "06", title: "EVOLVE", blurb: "Metrics in, improvements out. The system learns.", viz: <EvolveViz /> },

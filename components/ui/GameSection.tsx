@@ -80,21 +80,21 @@ export default function GameSection() {
         </div>
 
         <p className="pointer-events-none absolute left-8 top-24 z-10 font-tech text-[10px] leading-relaxed tracking-[0.25em] text-white/70">
-          TERRA//SIM v2.4<br />LAT -6.2088 / LNG 106.8456
+          WORLDS ENGINE v2.4<br />LAT -6.2088 / LNG 106.8456
         </p>
 
         <div
           ref={intro}
           className="pointer-events-none relative z-10 flex h-full flex-col justify-center px-8 md:px-16"
         >
-          <p className="font-tech text-[11px] tracking-[0.35em] text-dim">05 — GAME & XR</p>
+          <p className="font-tech text-[11px] tracking-[0.35em] text-dim">05 — GAME · XR · INSTALLATIONS</p>
           <h2 className="mt-5 font-display font-expanded text-[clamp(2.6rem,7vw,6.5rem)] leading-[0.95]">
             INTERACTIVE
             <br />
             <span className="text-chrome">WORLDS</span>
           </h2>
           <ul className="mt-7 flex gap-3 font-tech text-[11px] tracking-[0.25em]">
-            {["GAME", "XR", "SIMULATION"].map((t) => (
+            {["UNITY", "XR", "INSTALLATIONS"].map((t) => (
               <li key={t} className="rounded-full border border-white/15 bg-black/40 px-4 py-1.5 backdrop-blur">
                 {t}
               </li>

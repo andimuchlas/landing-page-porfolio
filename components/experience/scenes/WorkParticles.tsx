@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { S, POINTER, isMobile } from "@/lib/state";
 import { plateau, sampleTextPoints } from "@/lib/utils";
 
-const WORDS = ["ORBIT", "NEBULA", "TERRA", "ECHO"];
+const WORDS = ["RAJADEREK", "GENSET", "CASANELA", "ROUTER"];
 
 const VERT = /* glsl */ `
   attribute vec3 aP0;

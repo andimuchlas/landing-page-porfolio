@@ -169,7 +169,7 @@ export default function Preloader() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/assets/image/Logo.png"
-            alt="NOVA//LAB"
+            alt="ANDI MUCHLAS"
             className="h-16 w-auto mix-blend-screen md:h-20"
           />
         </div>

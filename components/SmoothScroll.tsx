@@ -7,12 +7,38 @@ import { prefersReducedMotion } from "@/lib/state";
 
 let lenisInstance: Lenis | null = null;
 
+/**
+ * Animated jump to a section anchor. Duration scales with travel distance
+ * (capped) so near hops feel snappy while cross-page flights still land
+ * softly; `lock` guarantees the animation completes instead of being cut
+ * short by wheel input.
+ */
 export function scrollTo(target: string) {
-  if (lenisInstance) {
-    lenisInstance.scrollTo(target, { duration: 1.6 });
-  } else {
-    document.querySelector(target)?.scrollIntoView({ behavior: "smooth" });
+  const el = document.querySelector<HTMLElement>(target);
+  if (!el) return;
+
+  if (prefersReducedMotion()) {
+    el.scrollIntoView({ behavior: "auto" });
+    return;
   }
+
+  if (!lenisInstance) {
+    el.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  const current = lenisInstance.scroll;
+  const top = el.getBoundingClientRect().top + current;
+  const dist = Math.abs(top - current);
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+  const duration = Math.min(2, Math.max(0.7, (dist / vh) * 0.35));
+
+  lenisInstance.scrollTo(top, {
+    duration,
+    lock: true,
+    force: true,
+    easing: (t) => 1 - Math.pow(1 - t, 4), // quart-out: fast launch, soft landing
+  });
 }
 
 /** Freeze page scrolling (menus, modals) without fighting Lenis. */

@@ -100,25 +100,25 @@ export default function Hero() {
 
         <div className="pointer-events-none relative z-10 px-6 text-center">
           <p className="hero-fade mb-8 font-tech text-[11px] tracking-[0.35em] text-dim md:text-xs">
-            [ SOFTWARE HOUSE × CREATIVE TECHNOLOGY STUDIO ]
+            [ ANDI MUCHLAS — BACKEND & SPATIAL SYSTEMS ENGINEER ]
           </p>
           <h1
             ref={h1}
             className="font-display font-expanded text-[clamp(3rem,11vw,9.5rem)] leading-[0.92] tracking-tight"
           >
-            <span className="hero-line block">WE BUILD</span>
-            <span className="hero-line text-chrome block">DIGITAL</span>
+            <span className="hero-line block">I BUILD</span>
+            <span className="hero-line text-chrome block">SYSTEMS</span>
             <span className="hero-line block">
-              WORLDS<span className="text-accent">.</span>
+              THAT SCALE<span className="text-accent">.</span>
             </span>
           </h1>
           <p className="hero-fade mx-auto mt-10 max-w-md font-tech text-xs leading-relaxed text-dim">
-            PRODUCTS · INTELLIGENT SYSTEMS · SPATIAL TECHNOLOGY · GAMES
+            SPATIAL COMPUTING · HIGH-THROUGHPUT APIS · DISTRIBUTED SYSTEMS
           </p>
 
           <div className="hero-fade pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
             <MagneticButton
-              href="mailto:hello@novalab.studio"
+              href="mailto:andimuchlas156@gmail.com?subject=Project%20Inquiry"
               className="rounded-full border border-accent px-7 py-3 font-tech text-[11px] tracking-[0.25em] text-accent transition-colors duration-300 hover:bg-accent hover:text-black"
             >
               START A PROJECT →

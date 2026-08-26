@@ -6,52 +6,8 @@ import { ScrollTrigger } from "@/lib/gsap";
 import { S } from "@/lib/state";
 import { clamp01, smoothstep } from "@/lib/utils";
 import { lockPageScroll } from "@/components/SmoothScroll";
+import { ARCHIVE, FEATURED, findProject, LINKS } from "@/lib/content";
 import WorkParticles from "@/components/experience/scenes/WorkParticles";
-
-/* ------------------------------- data ------------------------------- */
-
-const PROJECTS = [
-  {
-    id: "orbit",
-    n: "01",
-    name: "ORBIT",
-    tag: "Enterprise logistics platform.",
-    year: "2025",
-    type: "WEB PLATFORM",
-    stack: ["NEXT.JS", "GO", "POSTGRES"],
-    desc: "A realtime control tower for enterprise logistics — live fleet telemetry, route optimization and exception handling across dozens of regional hubs.",
-  },
-  {
-    id: "nebula",
-    n: "02",
-    name: "NEBULA",
-    tag: "AI-powered analytics platform.",
-    year: "2024",
-    type: "AI / SAAS",
-    stack: ["PYTHON", "REACT", "AWS"],
-    desc: "An ML platform that turns raw product data into forecasts and anomaly alerts, with explainability built into every model card.",
-  },
-  {
-    id: "terra",
-    n: "03",
-    name: "TERRA",
-    tag: "Spatial intelligence platform.",
-    year: "2026",
-    type: "GEOSPATIAL",
-    stack: ["THREE.JS", "NODE.JS", "POSTGRES"],
-    desc: "A geospatial engine that renders massive terrain datasets in the browser — from satellite imagery to digital-twin simulations.",
-  },
-  {
-    id: "echo",
-    n: "04",
-    name: "ECHO",
-    tag: "Interactive multiplayer game.",
-    year: "2025",
-    type: "GAME",
-    stack: ["UNITY", "C#", "WEBGL"],
-    desc: "A browser-native multiplayer arena built on WebGL netcode — sub-frame input latency with rollback across regions.",
-  },
-];
 
 /* ------------------------------ mockups ------------------------------ */
 
@@ -71,157 +27,225 @@ function WindowFrame({ title, children }: { title: string; children: React.React
   );
 }
 
-function OrbitMock() {
-  const bars = [42, 68, 35, 80, 55, 92, 61, 47, 74, 58, 88, 66];
+function RajaderekMock() {
   return (
-    <WindowFrame title="ORBIT // CONTROL">
+    <WindowFrame title="RAJADEREK // DISPATCH">
       <div className="flex">
-        <div className="hidden w-28 shrink-0 space-y-3 border-r border-white/8 p-4 sm:block">
-          <div className="mb-4 h-2 w-8 rounded bg-accent" />
-          {[70, 50, 60, 40, 55].map((w, i) => (
-            <div key={i} className="h-1.5 rounded bg-white/12" style={{ width: `${w}%` }} />
+        <div className="relative min-w-0 flex-1 p-3 sm:p-4">
+          {/* city map */}
+          <svg viewBox="0 0 220 150" className="h-36 w-full sm:h-48">
+            {[
+              [20, 0, 20, 150], [60, 0, 55, 150], [110, 0, 118, 150], [160, 0, 168, 150],
+              [0, 30, 220, 22], [0, 75, 220, 80], [0, 120, 220, 128],
+            ].map(([x1, y1, x2, y2], i) => (
+              <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#ffffff14" strokeWidth="1" />
+            ))}
+            {/* route */}
+            <polyline
+              points="28,132 62,78 118,84 168,38"
+              fill="none"
+              stroke="#ff4d00"
+              strokeWidth="1.5"
+              strokeDasharray="5 4"
+              className="anim-dash"
+            />
+            {/* h3 hexes near destination */}
+            <polygon points="168,26 178,32 178,44 168,50 158,44 158,32" fill="none" stroke="#86efac66" strokeWidth="1" />
+            {/* drivers */}
+            <circle cx="28" cy="132" r="3" fill="#ff4d00" className="anim-pulse-dot" />
+            <circle cx="62" cy="78" r="2.5" fill="#86efac" />
+            <circle cx="168" cy="38" r="2.5" fill="#ffffff88" />
+            <circle cx="160" cy="112" r="2.5" fill="#86efac" />
+          </svg>
+          <div className="absolute left-4 top-4 hidden font-tech text-[9px] leading-relaxed tracking-widest text-dim sm:block">
+            GRID -6.21 / 106.84<br />H3 RES 9 · O(1)
+          </div>
+          <div className="mt-2 flex gap-4 font-tech text-[9px] tracking-widest text-dim">
+            <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-accent" />UNIT</span>
+            <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-[#86efac]" />DRIVER</span>
+            <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-white/40" />JOB</span>
+          </div>
+        </div>
+        <div className="hidden w-32 shrink-0 space-y-3 border-l border-white/8 p-4 sm:block">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="rounded-lg border border-white/8 bg-black/30 p-2 text-center">
+              <div className="font-display text-sm font-bold text-chrome">24</div>
+              <div className="mt-0.5 font-tech text-[8px] tracking-widest text-dim">UNITS</div>
+            </div>
+            <div className="rounded-lg border border-white/8 bg-black/30 p-2 text-center">
+              <div className="font-display text-sm font-bold text-chrome">~7m</div>
+              <div className="mt-0.5 font-tech text-[8px] tracking-widest text-dim">ETA</div>
+            </div>
+          </div>
+          {[["JOB #042", "MATCHED"], ["JOB #041", "EN ROUTE"], ["JOB #040", "DONE"], ["JOB #039", "DONE"]].map(([id, st], i) => (
+            <div key={id} className="rounded-lg border border-white/8 bg-black/30 p-2">
+              <div className="font-tech text-[9px] tracking-wider text-white/80">{id}</div>
+              <div className={`mt-1 font-tech text-[8px] tracking-widest ${st === "MATCHED" ? "text-accent" : st === "EN ROUTE" ? "text-green-400" : "text-dim"}`}>
+                {st === "MATCHED" ? "▸ MATCHED" : st === "EN ROUTE" ? "▸ EN ROUTE" : "✓ DONE"}
+              </div>
+              {i === 0 && <div className="mt-1.5 h-0.5 overflow-hidden rounded bg-white/10"><div className="anim-loopbar h-full bg-accent" /></div>}
+            </div>
           ))}
         </div>
-        <div className="min-w-0 flex-1 p-3 sm:p-4">
-          <div className="grid grid-cols-3 gap-2 sm:gap-3">
-            {[
-              ["1,284", "SHIPMENTS"],
-              ["99.7%", "ON-TIME"],
-              ["38", "ROUTES"],
-            ].map(([v, l]) => (
-              <div key={l} className="rounded-lg border border-white/8 bg-black/30 p-2 sm:p-3">
-                <div className="font-display text-base font-bold text-chrome sm:text-lg">{v}</div>
-                <div className="mt-1 font-tech text-[9px] tracking-widest text-dim">{l}</div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-3 flex h-16 items-end gap-1.5 rounded-lg border border-white/8 bg-black/30 p-3 sm:h-24">
-            {bars.map((h, i) => (
-              <div
-                key={i}
-                className={`flex-1 rounded-sm ${i === 5 ? "bg-accent" : "bg-white/20"}`}
-                style={{ height: `${h}%` }}
-              />
-            ))}
-          </div>
-          <div className="mt-3 space-y-2">
-            {[82, 64, 45].map((w, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <span className={`h-1.5 w-1.5 rounded-full ${i === 0 ? "bg-green-400" : "bg-white/25"}`} />
-                <div className="h-1.5 rounded bg-white/12" style={{ width: `${w}%` }} />
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </WindowFrame>
   );
 }
 
-function NebulaMock() {
+function GensetMock() {
   return (
-    <WindowFrame title="NEBULA // ANALYTICS">
-      <div className="flex flex-col sm:grid sm:grid-cols-5">
-        <div className="p-3 sm:col-span-3 sm:p-4">
-          <svg viewBox="0 0 200 140" className="h-28 w-full sm:h-40">
-            {[
-              [30, 70], [70, 30], [75, 105], [120, 65], [160, 30], [165, 100], [100, 125],
-            ].map(([x, y], i) => (
-              <circle key={i} cx={x} cy={y} r={i === 3 ? 7 : 4} fill={i % 2 ? "#c4b5fd" : "#ffffff33"} />
-            ))}
-            {[[30, 70, 120, 65], [70, 30, 120, 65], [75, 105, 120, 65], [120, 65, 160, 30], [120, 65, 165, 100], [100, 125, 75, 105]]
-              .map(([x1, y1, x2, y2], i) => (
-                <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#c4b5fd66" strokeWidth="1" className="anim-dash" strokeDasharray="4 4" />
-              ))}
-          </svg>
-        </div>
-        <div className="space-y-3 border-t border-white/8 p-3 sm:col-span-2 sm:border-l sm:border-t-0 sm:p-4">
-          <div>
-            <div className="font-display text-2xl font-bold text-chrome">98.2%</div>
-            <div className="font-tech text-[9px] tracking-widest text-dim">MODEL ACCURACY</div>
-          </div>
-          <svg viewBox="0 0 100 30" className="h-8 w-full">
-            <polyline points="0,24 15,18 30,22 45,10 60,14 75,6 100,9" fill="none" stroke="#c4b5fd" strokeWidth="1.5" />
-          </svg>
-          <div className="space-y-2 pt-1">
-            {[88, 62].map((w, i) => (
-              <div key={i} className="h-1.5 rounded bg-white/12" style={{ width: `${w}%` }} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </WindowFrame>
-  );
-}
-
-function TerraMock() {
-  return (
-    <WindowFrame title="TERRA // GEOSPATIAL">
-      <div className="relative p-3 sm:p-4">
-        <svg viewBox="0 0 220 130" className="h-32 w-full sm:h-44">
+    <WindowFrame title="GENSET // PIPELINE">
+      <div className="space-y-2 p-3 sm:p-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {[
-            "M110,65 m-52,0 a52,38 0 1,0 104,0 a52,38 0 1,0 -104,0",
-            "M110,65 m-38,0 a38,27 0 1,0 76,0 a38,27 0 1,0 -76,0",
-            "M110,65 m-24,0 a24,17 0 1,0 48,0 a24,17 0 1,0 -48,0",
-            "M110,65 m-11,0 a11,8 0 1,0 22,0 a11,8 0 1,0 -22,0",
-          ].map((d, i) => (
-            <path key={i} d={d} fill="none" stroke="#86efac" strokeOpacity={0.5 - i * 0.08} strokeWidth="1" />
+            ["142", "QUEUE DEPTH"],
+            ["06", "WORKERS"],
+            ["99.98%", "UPTIME"],
+          ].map(([v, l]) => (
+            <div key={l} className="rounded-lg border border-white/8 bg-black/30 p-2 sm:p-3">
+              <div className="font-display text-base font-bold text-chrome sm:text-lg">{v}</div>
+              <div className="mt-1 font-tech text-[9px] tracking-widest text-dim">{l}</div>
+            </div>
           ))}
-          <line x1="0" y1="65" x2="220" y2="65" stroke="#ffffff22" strokeDasharray="3 5" />
-          <line x1="110" y1="0" x2="110" y2="130" stroke="#ffffff22" strokeDasharray="3 5" />
-          <circle cx="110" cy="65" r="3" fill="#ff4d00" className="anim-pulse-dot" />
-        </svg>
-        <div className="absolute right-4 top-4 hidden font-tech text-[9px] leading-relaxed tracking-widest text-dim sm:block">
-          LAT -6.2088<br />LNG 106.8456<br />ALT 128m
         </div>
-        <div className="mt-2 flex gap-4 font-tech text-[9px] tracking-widest text-dim">
-          <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-sm bg-[#86efac]" />URBAN</span>
-          <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-sm bg-white/25" />TERRAIN</span>
-          <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-sm bg-accent" />ASSET</span>
+        <div className="space-y-2 pt-1">
+          {[
+            ["PDF BAST · E-SIGN", "done", "w-full"],
+            ["FCM PUSH ALERTS", "run", "w-2/3"],
+            ["XLSX FINANCIAL EXPORT", "queued", "w-0"],
+          ].map(([label, state, w]) => (
+            <div key={label as string} className="flex items-center gap-3 rounded-lg border border-white/8 bg-black/30 px-3 py-2">
+              <span className={`inline-block h-1.5 w-1.5 shrink-0 rounded-full ${
+                state === "done" ? "bg-green-400" : state === "run" ? "anim-pulse-dot bg-accent" : "bg-white/25"
+              }`} />
+              <span className="min-w-0 flex-1 truncate font-tech text-[9px] tracking-wider text-white/80">
+                {label}
+              </span>
+              <span className="hidden h-1 w-16 overflow-hidden rounded bg-white/10 sm:block">
+                {state === "run" ? (
+                  <span className={`anim-loopbar block h-full bg-accent ${w}`} style={{ width: "66%" }} />
+                ) : (
+                  <span className={`block h-full rounded bg-white/20 ${state === "done" ? "w-full" : "w-0"}`} />
+                )}
+              </span>
+              <span className={`shrink-0 font-tech text-[8px] tracking-widest ${
+                state === "done" ? "text-green-400" : state === "run" ? "text-accent" : "text-dim"
+              }`}>
+                {state === "done" ? "✓ DONE" : state === "run" ? "RUNNING" : "QUEUED"}
+              </span>
+            </div>
+          ))}
+        </div>
+        <svg viewBox="0 0 200 28" className="h-7 w-full pt-1">
+          <polyline
+            points="0,22 18,18 36,20 54,12 72,15 90,9 108,13 126,7 144,11 162,6 180,9 200,4"
+            fill="none"
+            stroke="#c4b5fd"
+            strokeWidth="1.2"
+            strokeDasharray="5 4"
+            className="anim-dash"
+          />
+        </svg>
+      </div>
+    </WindowFrame>
+  );
+}
+
+function CasanelaMock() {
+  return (
+    <WindowFrame title="CASANELA // RESERVATION">
+      <div className="flex flex-col sm:flex-row">
+        <div className="p-3 sm:flex-1 sm:p-4">
+          {/* availability calendar */}
+          <div className="grid grid-cols-7 gap-1">
+            {Array.from({ length: 28 }).map((_, d) => {
+              const booked = [3, 4, 5, 11, 12, 17, 18, 19, 20, 24].includes(d);
+              const today = d === 8;
+              return (
+                <span
+                  key={d}
+                  className={`aspect-square rounded-sm border text-center font-tech text-[7px] leading-[1.6] ${
+                    today
+                      ? "border-accent text-accent"
+                      : booked
+                        ? "border-transparent bg-accent/25 text-white/70"
+                        : "border-white/8 text-white/35"
+                  }`}
+                >
+                  {d + 1}
+                </span>
+              );
+            })}
+          </div>
+          <div className="mt-3 flex gap-4 font-tech text-[9px] tracking-widest text-dim">
+            <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-sm bg-accent/60" />BOOKED</span>
+            <span><span className="mr-1 inline-block h-1.5 w-1.5 rounded-sm border border-accent" />TODAY</span>
+          </div>
+        </div>
+        <div className="space-y-2 border-t border-white/8 p-3 sm:w-44 sm:border-l sm:border-t-0 sm:p-4">
+          <div>
+            <div className="font-display text-xl font-bold text-chrome">0.8<span className="text-sm">ms</span></div>
+            <div className="font-tech text-[9px] tracking-widest text-dim">P95 LATENCY — BUN</div>
+          </div>
+          {[
+            ["HOTELMU SYNC", "SYNCED", true],
+            ["OTA CHANNELS", "PULLING", false],
+            ["BOOKING TIMEOUT", "ARMED", false],
+          ].map(([l, s, ok]) => (
+            <div key={l as string} className="flex items-center justify-between gap-2">
+              <span className="font-tech text-[9px] tracking-wider text-white/70">{l}</span>
+              <span className={`font-tech text-[8px] tracking-widest ${ok ? "text-green-400" : "text-accent"}`}>{ok ? "✓ SYNCED" : s === "PULLING" ? "◂ PULLING" : "▸ ARMED"}</span>
+            </div>
+          ))}
+          <div className="h-1 overflow-hidden rounded bg-white/10">
+            <div className="anim-loopbar h-full bg-accent" />
+          </div>
         </div>
       </div>
     </WindowFrame>
   );
 }
 
-function EchoMock() {
+function LlmRouterMock() {
+  const tiers = [
+    ["CHEAP MODELS", 68, "w-[68%]", "bg-white/30"],
+    ["MID TIER", 22, "w-[22%]", "bg-[#c4b5fd]"],
+    ["FRONTIER LLMS", 10, "w-[10%]", "bg-accent"],
+  ] as const;
   return (
-    <WindowFrame title="ECHO // MATCH 042">
-      <div className="relative h-44 select-none sm:h-56">
-        {/* corner brackets */}
-        <span className="absolute left-3 top-3 h-4 w-4 border-l-2 border-t-2 border-white/40" />
-        <span className="absolute right-3 top-3 h-4 w-4 border-r-2 border-t-2 border-white/40" />
-        <span className="absolute bottom-3 left-3 h-4 w-4 border-b-2 border-l-2 border-white/40" />
-        <span className="absolute bottom-3 right-3 h-4 w-4 border-b-2 border-r-2 border-white/40" />
-        {/* crosshair */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-          <div className="mx-auto mb-2 h-6 w-px bg-accent" />
-          <div className="mx-auto -mt-4 h-px w-6 bg-accent" />
+    <WindowFrame title="ROUTER // ORCHESTRATION">
+      <div className="p-3 sm:p-4">
+        <div className="flex items-center gap-2 rounded-lg border border-white/8 bg-black/30 p-2.5">
+          <span className="anim-blink font-tech text-[10px] tracking-wider text-white/80">
+            query ▸ classify(5 dims)
+          </span>
+          <span className="ml-auto font-tech text-[8px] tracking-widest text-green-400">DISTILBERT ✓</span>
         </div>
-        {/* kill feed */}
-        <div className="absolute right-4 top-4 space-y-1.5 font-tech text-[9px] tracking-wider text-white/60">
-          <div>NOVA_07 ▸ RIVAL_X</div>
-          <div>GHOST ▸ NOVA_02</div>
-          <div className="text-accent">YOU ▸ PHANTOM</div>
-        </div>
-        {/* hp */}
-        <div className="absolute bottom-4 left-4 space-y-1.5">
-          <div className="font-tech text-[9px] tracking-widest text-dim">HP</div>
-          <div className="flex gap-1">
-            {[100, 100, 100, 72, 0].map((v, i) => (
-              <span key={i} className="h-2 w-6 rounded-sm" style={{ background: v > 0 ? `rgba(255,77,0,${0.25 + v * 0.007})` : "rgba(255,255,255,0.08)" }} />
-            ))}
-          </div>
-        </div>
-        {/* ammo */}
-        <div className="absolute bottom-4 right-4 flex gap-1">
-          {[1, 1, 1, 1, 0, 0].map((v, i) => (
-            <span key={i} className={`h-4 w-1.5 rounded-sm ${v ? "bg-white/70" : "bg-white/12"}`} />
+        <div className="mx-auto my-2 h-3 w-px bg-gradient-to-b from-white/30 to-accent/60" />
+        <div className="space-y-2">
+          {tiers.map(([name, pct, w, color]) => (
+            <div key={name}>
+              <div className="mb-1 flex justify-between font-tech text-[9px] tracking-widest text-dim">
+                <span>{name}</span>
+                <span className="text-white/70">{pct}%</span>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded bg-white/8">
+                <div className={`h-full rounded ${color} ${w}`} />
+              </div>
+            </div>
           ))}
         </div>
-        {/* minimap */}
-        <div className="anim-drift absolute left-1/2 top-6 h-10 w-10 -translate-x-1/2 rounded-sm border border-white/20">
-          <span className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-400" />
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          {[
+            ["−72%", "COST"],
+            ["FALLBACK", "STATE-MACHINE"],
+            ["MULTILINGUAL", "COVERAGE"],
+          ].map(([v, l]) => (
+            <div key={l} className="rounded-lg border border-white/8 bg-black/30 p-2 text-center">
+              <div className="font-tech text-[10px] font-bold tracking-wider text-chrome">{v}</div>
+              <div className="mt-0.5 font-tech text-[8px] tracking-widest text-dim">{l}</div>
+            </div>
+          ))}
         </div>
       </div>
     </WindowFrame>
@@ -229,10 +253,10 @@ function EchoMock() {
 }
 
 const MOCKS: Record<string, () => React.ReactElement> = {
-  orbit: OrbitMock,
-  nebula: NebulaMock,
-  terra: TerraMock,
-  echo: EchoMock,
+  rajaderek: RajaderekMock,
+  genset: GensetMock,
+  casanela: CasanelaMock,
+  llmrouter: LlmRouterMock,
 };
 
 /* ------------------------------ section ------------------------------ */
@@ -242,7 +266,7 @@ export default function Work() {
   const panels = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const [openId, setOpenId] = useState<string | null>(null);
-  const project = openId ? PROJECTS.find((p) => p.id === openId) : null;
+  const project = openId ? findProject(openId) : null;
 
   useEffect(() => {
     if (!project) return;
@@ -266,7 +290,8 @@ export default function Work() {
 
     const infos = Array.from(wrap.querySelectorAll<HTMLElement>(".work-info"));
     const mocks = Array.from(wrap.querySelectorAll<HTMLElement>(".work-mock"));
-    const last = PROJECTS.length - 1;
+    const count = FEATURED.length;
+    const last = count - 1;
 
     // content opacity is a pure function of S.work.p — fully scrub-reversible.
     // Panels stack via sticky; the moment the next project starts rising, the
@@ -274,10 +299,8 @@ export default function Work() {
     let raf = 0;
     let running = false;
     const tick = () => {
-      // ScrollTrigger progress spans wrapperHeight - viewport (300vh for 4
-      // panels), so each panel's sticky window is 1/(count-1) of p, not 1/count.
-      const g = clamp01(S.work.p) * (PROJECTS.length - 1);
-      for (let i = 0; i < PROJECTS.length; i++) {
+      const g = clamp01(S.work.p) * (count - 1);
+      for (let i = 0; i < count; i++) {
         const info = infos[i];
         const mock = mocks[i];
         if (!info || !mock) continue;
@@ -286,10 +309,8 @@ export default function Work() {
         let o = 0;
         let slide = 0;
         if (x >= 0 && x <= 1) {
-          // outgoing: fade out early while the next panel rises over it
           o = i === last ? 1 : 1 - smoothstep(0.1, 0.7, x);
         } else if (x >= -1 && x < 0) {
-          // incoming: content appears as the panel approaches center
           const r = x + 1;
           o = smoothstep(0.3, 0.9, r);
           slide = (1 - r) * 110;
@@ -341,9 +362,59 @@ export default function Work() {
           <h2 className="text-outline font-display text-[clamp(3rem,10vw,8rem)] font-black leading-none">
             THE WORK
           </h2>
-          <span className="mb-2 font-tech text-xs text-dim">[ 2024—2026 ]</span>
+          <span className="mb-2 font-tech text-xs text-dim">[ FEATURED SYSTEMS ]</span>
         </div>
       </header>
+
+      {/* archive grid */}
+      <div className="relative z-10 border-y border-white/8 bg-bg/70 px-6 py-24 backdrop-blur-sm md:px-16">
+        <div className="mx-auto max-w-6xl">
+          <p className="font-tech text-[11px] tracking-[0.35em] text-dim">
+            02A — ARCHIVE
+          </p>
+          <div className="mt-4 flex items-end justify-between gap-6">
+            <h2 className="font-display text-4xl font-expanded leading-none md:text-6xl">
+              MORE <span className="text-chrome">BUILDS.</span>
+            </h2>
+            <span className="mb-1 hidden font-tech text-xs text-dim sm:block">
+              [ GAMES · INSTALLATIONS · TOOLS ]
+            </span>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {ARCHIVE.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setOpenId(p.id)}
+                className="group rounded-xl border border-white/8 bg-panel/60 p-6 text-left backdrop-blur transition-colors duration-300 hover:border-accent/60"
+              >
+                <div className="flex items-start justify-between">
+                  <span className="text-outline font-display text-3xl font-black">
+                    {p.index}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="font-tech text-sm text-accent opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100"
+                  >
+                    ↗
+                  </span>
+                </div>
+                <h3 className="mt-6 font-display text-xl font-expanded">{p.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-dim">{p.tag}</p>
+                <p className="mt-4 font-tech text-[9px] tracking-[0.25em] text-dim/90">
+                  {p.type}
+                </p>
+              </button>
+            ))}
+          </div>
+
+          <p className="mt-8 font-tech text-[10px] tracking-[0.25em] text-dim">
+            MOST PRODUCTION CODE IS PRIVATE — FULL WALKTHROUGHS AVAILABLE ON
+            REQUEST.
+          </p>
+        </div>
+      </div>
 
       <div ref={panels} className="relative">
         {/* single sticky particle layer behind all panels */}
@@ -355,7 +426,7 @@ export default function Work() {
           </div>
         </div>
 
-        {PROJECTS.map((p) => {
+        {FEATURED.map((p) => {
           const Mock = MOCKS[p.id];
           return (
             <div
@@ -365,21 +436,26 @@ export default function Work() {
               <div className="relative z-10 grid w-full items-center gap-6 sm:gap-8 md:grid-cols-2 md:gap-10">
                 <div className="work-info pointer-events-none will-change-[opacity]">
                   <p className="font-tech text-xs tracking-[0.3em]" style={{ color: "#9a9da6" }}>
-                    PROJECT {p.n} / 04
+                    PROJECT {p.index} / 04
                   </p>
                   <h3 className="text-outline mt-2 font-display text-[clamp(2.4rem,9vw,6rem)] font-black leading-none md:mt-3">
                     {p.name}
                   </h3>
                   <p className="mt-3 max-w-sm text-sm text-dim">{p.tag}</p>
                   <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 font-tech text-[10px] tracking-[0.2em] text-dim md:mt-6">
-                    <span>YEAR — {p.year}</span>
-                    <span>{p.type}</span>
+                    <span>{p.role}</span>
+                    <span>{p.status}</span>
                     <span className="flex gap-2">
-                      {p.stack.map((s) => (
+                      {p.stack.slice(0, 4).map((s) => (
                         <span key={s} className="rounded border border-white/15 px-2 py-0.5">
                           {s}
                         </span>
                       ))}
+                      {p.stack.length > 4 && (
+                        <span className="rounded border border-white/15 px-2 py-0.5">
+                          +{p.stack.length - 4}
+                        </span>
+                      )}
                     </span>
                   </div>
                   <button
@@ -432,12 +508,32 @@ export default function Work() {
               ✕
             </button>
             <p className="font-tech text-[11px] tracking-[0.35em] text-dim">
-              PROJECT {project.n} / 04 — {project.type}
+              {project.collection === "featured"
+                ? `PROJECT ${project.index} / 04`
+                : `ARCHIVE ${project.index}`}
+              {" — "}
+              {project.type}
             </p>
-            <h3 className="mt-3 font-display text-5xl font-black leading-none md:text-6xl">
+            <h3 className="mt-3 font-display text-4xl font-black leading-none md:text-6xl">
               {project.name}
             </h3>
+            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-tech text-[10px] tracking-[0.2em] text-dim">
+              <span>{project.role}</span>
+              <span className="text-dim/80">{project.status}</span>
+            </div>
             <p className="mt-4 text-sm leading-relaxed text-dim">{project.desc}</p>
+
+            {project.highlights.length > 0 && (
+              <ul className="mt-5 space-y-2.5 border-t border-white/10 pt-5">
+                {project.highlights.map((h) => (
+                  <li key={h} className="flex gap-3 text-sm leading-relaxed text-ink/85">
+                    <span aria-hidden className="mt-0.5 shrink-0 text-accent">▸</span>
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <div className="mt-6 flex flex-wrap gap-2">
               {project.stack.map((s) => (
                 <span
@@ -449,13 +545,26 @@ export default function Work() {
               ))}
             </div>
             <div className="mt-7 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5 font-tech text-[10px] tracking-[0.25em] text-dim">
-              <span>YEAR — {project.year}</span>
-              <a
-                href={`mailto:hello@novalab.studio?subject=Case study: ${project.name}`}
-                className="text-accent transition-opacity hover:opacity-70"
-              >
-                ASK ABOUT IT ↗
-              </a>
+              <span className="sm:hidden">{project.status}</span>
+              {project.link ? (
+                <a
+                  href={project.link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-accent transition-opacity hover:opacity-70"
+                >
+                  {project.link.label}
+                </a>
+              ) : (
+                <a
+                  href={`mailto:${LINKS.email}?subject=${encodeURIComponent(
+                    `Case study: ${project.name}`
+                  )}`}
+                  className="text-accent transition-opacity hover:opacity-70"
+                >
+                  ASK ABOUT IT ↗
+                </a>
+              )}
             </div>
           </div>
         </div>

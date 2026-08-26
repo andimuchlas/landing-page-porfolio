@@ -2,27 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "@/lib/state";
-
-type Tech = {
-  name: string;
-  desc: string;
-  projects: string[];
-};
-
-const TECHS: Tech[] = [
-  { name: "NEXT.JS", desc: "Web applications, SSR/SSG, full-stack architecture.", projects: ["ORBIT", "NEBULA"] },
-  { name: "REACT", desc: "Interface engineering across every product.", projects: ["ORBIT", "NEBULA", "TERRA"] },
-  { name: "TYPESCRIPT", desc: "Type safety as a default, not an afterthought.", projects: ["ORBIT", "TERRA"] },
-  { name: "NODE.JS", desc: "Realtime services and API layers.", projects: ["TERRA", "ECHO"] },
-  { name: "THREE.JS", desc: "3D on the web — including this very site.", projects: ["TERRA", "ECHO", "THIS SITE"] },
-  { name: "GSAP", desc: "Scroll-driven storytelling and motion systems.", projects: ["THIS SITE"] },
-  { name: "PYTHON", desc: "ML pipelines, data crunching, automation.", projects: ["NEBULA"] },
-  { name: "GO", desc: "High-throughput backend services.", projects: ["ORBIT"] },
-  { name: "POSTGRES", desc: "The database we trust with the source of truth.", projects: ["ORBIT", "NEBULA", "TERRA"] },
-  { name: "DOCKER", desc: "Reproducible environments everywhere.", projects: ["ORBIT", "ECHO"] },
-  { name: "AWS", desc: "Infrastructure that scales past the launch spike.", projects: ["NEBULA", "TERRA"] },
-  { name: "UNITY", desc: "Games, XR and realtime simulation.", projects: ["ECHO"] },
-];
+import { CERTS, LINKS, TECHS } from "@/lib/content";
 
 export default function Toolbox() {
   const field = useRef<HTMLDivElement>(null);
@@ -135,7 +115,7 @@ export default function Toolbox() {
     <section id="toolbox" className="relative flex h-screen items-center justify-center overflow-hidden px-6">
       <div className="absolute inset-0 grid-lines opacity-60" aria-hidden />
 
-      <div className="relative flex h-full max-h-[820px] w-full max-w-[1100px] flex-col items-center justify-center py-24">
+      <div className="relative flex h-full max-h-[820px] w-full max-w-[1100px] flex-col items-center justify-center pb-28 pt-20">
         <p className="mb-2 font-tech text-[11px] tracking-[0.35em] text-dim">04 — OUR TOOLBOX</p>
 
         <div
@@ -163,11 +143,11 @@ export default function Toolbox() {
 
           {/* center */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
-            <div className="font-display font-expanded text-2xl tracking-wide md:text-4xl">
-              NOVA<span className="text-accent">{'//'}</span>LAB
+            <div className="font-display font-expanded text-xl tracking-wide md:text-3xl">
+              ANDI<span className="text-accent">{'//'}</span>MUCHLAS
             </div>
             <div className="mt-1 font-tech text-[9px] tracking-[0.4em] text-dim">
-              ONE SYSTEM
+              SYSTEMS ENGINEER
             </div>
           </div>
 
@@ -217,6 +197,29 @@ export default function Toolbox() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* certification strip */}
+      <div className="absolute inset-x-0 bottom-5 z-20 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-6">
+        {CERTS.map((c) => (
+          <a
+            key={c.name}
+            href={c.href}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-white/15 bg-black/60 px-3 py-1.5 font-tech text-[9px] tracking-[0.2em] text-dim backdrop-blur transition-colors duration-200 hover:border-accent hover:text-accent"
+          >
+            ✓ {c.name}
+          </a>
+        ))}
+        <a
+          href={LINKS.gcpProfile}
+          target="_blank"
+          rel="noreferrer"
+          className="font-tech text-[9px] tracking-[0.2em] text-dim/90 underline-offset-4 transition-colors hover:text-accent hover:underline"
+        >
+          + MORE BADGES ↗
+        </a>
       </div>
     </section>
   );
