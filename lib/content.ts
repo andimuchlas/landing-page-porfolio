@@ -5,7 +5,7 @@
 
 export const LINKS = {
   email: "andimuchlas156@gmail.com",
-  linkedin: "https://www.linkedin.com/in/andimuchlas",
+  linkedin: "https://www.linkedin.com/in/andi-m-489b61248/",
   website: "https://andi.is-a.dev",
   gcpProfile:
     "https://www.skills.google/public_profiles/104038eb-cdaa-4a54-8bf4-4d575ae2c783",
