@@ -61,8 +61,35 @@ export const FEATURED: Project[] = [
     ],
   },
   {
-    id: "genset",
+    id: "aiavatar",
     index: "02",
+    collection: "featured",
+    name: "AI AVATAR UNITY",
+    tag: "End-to-End AI & Real-Time Interactive System.",
+    desc: "Real-time AI avatar application combining a Unity client with a containerized voice-processing backend.",
+    role: "UNITY & AI SYSTEMS ENGINEER",
+    status: "INTERACTIVE SYSTEM",
+    type: "INTERACTIVE SYSTEM",
+    stack: [
+      "UNITY",
+      "C#",
+      "WEBSOCKET",
+      "DOCKER",
+      "STT",
+      "LLM",
+      "TTS",
+      "OCULUS LIPSYNC",
+      "METAPERSON",
+    ],
+    highlights: [
+      "Voice Pipeline: Implemented a voice pipeline connecting speech recognition, LLM inference, and speech synthesis for real-time conversational interaction.",
+      "Avatar & Lip-Sync Animation: Integrated MetaPerson avatar and Oculus LipSync to translate generated audio into real-time facial and lip-sync animation.",
+      "Real-Time Communication: Connected Unity to backend AI services through WebSocket-based real-time communication.",
+    ],
+  },
+  {
+    id: "genset",
+    index: "03",
     collection: "featured",
     name: "GENSET MANAGEMENT",
     tag: "Enterprise equipment rental & field maintenance backend.",
@@ -88,7 +115,7 @@ export const FEATURED: Project[] = [
   },
   {
     id: "casanela",
-    index: "03",
+    index: "04",
     collection: "featured",
     name: "CASANELA VILLA API",
     tag: "High-throughput reservation engine.",
@@ -114,7 +141,7 @@ export const FEATURED: Project[] = [
   },
   {
     id: "llmrouter",
-    index: "04",
+    index: "05",
     collection: "featured",
     name: "LLM INTENT ROUTER",
     tag: "Intelligent model orchestration layer.",
@@ -262,7 +289,8 @@ export const TECHS: Tech[] = [
   { name: "REDIS", desc: "Cache, queues and proximity state.", projects: ["RAJADEREK", "GENSET", "CASANELA"] },
   { name: "KUBERNETES", desc: "Orchestrating production workloads.", projects: ["RAJADEREK"] },
   { name: "AWS", desc: "S3 presigned flows & cloud infrastructure.", projects: ["GENSET", "CASANELA"] },
-  { name: "UNITY", desc: "Games, XR and realtime installations.", projects: ["GEPHYRION", "ELDORIA"] },
+  { name: "UNITY", desc: "Games, XR and realtime installations.", projects: ["AI AVATAR UNITY", "GEPHYRION", "ELDORIA"] },
+  { name: "DOCKER", desc: "Containerized voice-processing backend services.", projects: ["AI AVATAR UNITY"] },
 ];
 
 export type Cert = { name: string; href: string };

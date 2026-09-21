@@ -92,6 +92,116 @@ function RajaderekMock() {
   );
 }
 
+function AiAvatarMock() {
+  return (
+    <WindowFrame title="AI AVATAR // REAL-TIME SYSTEM">
+      <div className="space-y-2.5 p-3 sm:p-4">
+        {/* Voice pipeline flow */}
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+          {[
+            { label: "VOICE STT", sub: "STREAM INGEST" },
+            { label: "LLM INFERENCE", sub: "STREAM TOKENS" },
+            { label: "TTS + LIP-SYNC", sub: "AUDIO & VISEMES" },
+          ].map((s, i) => (
+            <div
+              key={s.label}
+              className="relative rounded-lg border border-white/8 bg-black/30 p-2 text-center"
+            >
+              <div className="flex items-center justify-center gap-1.5">
+                <span className="anim-pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+                <span className="font-tech text-[8px] font-bold tracking-wider text-white/90 sm:text-[9px]">
+                  {s.label}
+                </span>
+              </div>
+              <div className="mt-1 font-tech text-[7px] tracking-widest text-dim sm:text-[8px]">
+                {s.sub}
+              </div>
+              {i < 2 && (
+                <span
+                  aria-hidden
+                  className="absolute -right-2.5 top-1/2 hidden -translate-y-1/2 font-tech text-[9px] text-accent/60 sm:block"
+                >
+                  ▸
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Real-time Viseme & Audio Waveform */}
+        <div className="rounded-lg border border-white/8 bg-black/30 p-2.5 sm:p-3">
+          <div className="flex items-center justify-between font-tech text-[9px] tracking-widest text-dim">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400" />
+              OCULUS LIPSYNC · METAPERSON
+            </span>
+            <span className="text-white/70">60 FPS · REALTIME</span>
+          </div>
+
+          {/* Audio Waveform visualization */}
+          <div className="mt-2.5 flex h-9 items-end justify-between gap-1 px-1">
+            {[
+              28, 48, 70, 88, 45, 95, 100, 75, 40, 58, 82, 98, 65, 42, 78, 90,
+              52, 68, 35, 72, 88, 50, 94, 62, 38, 80, 54, 30,
+            ].map((height, i) => (
+              <span
+                key={i}
+                className="w-full rounded-full bg-gradient-to-t from-accent/30 via-accent to-white/90"
+                style={{
+                  height: `${height}%`,
+                  opacity: 0.35 + (height / 100) * 0.65,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Viseme indicators */}
+          <div className="mt-2.5 flex items-center justify-between border-t border-white/6 pt-2 font-tech text-[8px] tracking-wider text-dim">
+            <span>VISEME TARGETS:</span>
+            <div className="flex gap-1 sm:gap-1.5">
+              {[
+                { name: "sil", on: false },
+                { name: "aa", on: true },
+                { name: "ee", on: false },
+                { name: "ih", on: true },
+                { name: "oh", on: false },
+                { name: "ou", on: false },
+              ].map((v) => (
+                <span
+                  key={v.name}
+                  className={`rounded px-1.5 py-0.5 uppercase ${
+                    v.on
+                      ? "border border-accent/60 bg-accent/20 font-bold text-accent"
+                      : "border border-white/8 bg-white/4 text-dim/60"
+                  }`}
+                >
+                  {v.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Telemetry metrics */}
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            ["<15ms", "WS LATENCY"],
+            ["DOCKER", "BACKEND POD"],
+            ["UNITY 3D", "CLIENT ENGINE"],
+          ].map(([v, l]) => (
+            <div key={l} className="rounded-lg border border-white/8 bg-black/30 p-2 text-center">
+              <div className="font-tech text-[10px] font-bold tracking-wider text-chrome sm:text-xs">
+                {v}
+              </div>
+              <div className="mt-0.5 font-tech text-[8px] tracking-widest text-dim">{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </WindowFrame>
+  );
+}
+
 function GensetMock() {
   return (
     <WindowFrame title="GENSET // PIPELINE">
@@ -254,6 +364,7 @@ function LlmRouterMock() {
 
 const MOCKS: Record<string, () => React.ReactElement> = {
   rajaderek: RajaderekMock,
+  aiavatar: AiAvatarMock,
   genset: GensetMock,
   casanela: CasanelaMock,
   llmrouter: LlmRouterMock,
@@ -436,7 +547,7 @@ export default function Work() {
               <div className="relative z-10 grid w-full items-center gap-6 sm:gap-8 md:grid-cols-2 md:gap-10">
                 <div className="work-info pointer-events-none will-change-[opacity]">
                   <p className="font-tech text-xs tracking-[0.3em]" style={{ color: "#9a9da6" }}>
-                    PROJECT {p.index} / 04
+                    PROJECT {p.index} / {String(FEATURED.length).padStart(2, "0")}
                   </p>
                   <h3 className="text-outline mt-2 font-display text-[clamp(2.4rem,9vw,6rem)] font-black leading-none md:mt-3">
                     {p.name}
@@ -509,7 +620,7 @@ export default function Work() {
             </button>
             <p className="font-tech text-[11px] tracking-[0.35em] text-dim">
               {project.collection === "featured"
-                ? `PROJECT ${project.index} / 04`
+                ? `PROJECT ${project.index} / ${String(FEATURED.length).padStart(2, "0")}`
                 : `ARCHIVE ${project.index}`}
               {" — "}
               {project.type}

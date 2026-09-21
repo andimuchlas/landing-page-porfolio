@@ -7,33 +7,36 @@ import * as THREE from "three";
 import { S, POINTER, isMobile } from "@/lib/state";
 import { plateau, sampleTextPoints } from "@/lib/utils";
 
-const WORDS = ["RAJADEREK", "GENSET", "CASANELA", "ROUTER"];
+const WORDS = ["RAJADEREK", "AVATAR", "GENSET", "CASANELA", "ROUTER"];
 
 const VERT = /* glsl */ `
   attribute vec3 aP0;
   attribute vec3 aP1;
   attribute vec3 aP2;
   attribute vec3 aP3;
+  attribute vec3 aP4;
   attribute float aRand;
 
-  uniform float uProgress; // 0..3
+  uniform float uProgress; // 0..4
   uniform float uTime;
 
   varying float vAlpha;
   varying vec3 vColor;
 
   void main() {
-    float g = clamp(uProgress, 0.0, 3.0);
+    float g = clamp(uProgress, 0.0, 4.0);
 
     // chained segment blends (no dynamic attribute indexing in GLSL ES)
     vec3 pos = mix(aP0, aP1, clamp(g, 0.0, 1.0));
     pos = mix(pos, aP2, clamp(g - 1.0, 0.0, 1.0));
     pos = mix(pos, aP3, clamp(g - 2.0, 0.0, 1.0));
+    pos = mix(pos, aP4, clamp(g - 3.0, 0.0, 1.0));
 
     // color follows the same chain
-    vec3 c = mix(vec3(0.62, 0.796, 1.0), vec3(0.769, 0.71, 0.992), clamp(g, 0.0, 1.0));
-    c = mix(c, vec3(0.525, 0.937, 0.675), clamp(g - 1.0, 0.0, 1.0));
-    c = mix(c, vec3(1.0, 0.698, 0.49), clamp(g - 2.0, 0.0, 1.0));
+    vec3 c = mix(vec3(0.62, 0.796, 1.0), vec3(1.0, 0.45, 0.2), clamp(g, 0.0, 1.0));
+    c = mix(c, vec3(0.769, 0.71, 0.992), clamp(g - 1.0, 0.0, 1.0));
+    c = mix(c, vec3(0.525, 0.937, 0.675), clamp(g - 2.0, 0.0, 1.0));
+    c = mix(c, vec3(1.0, 0.698, 0.49), clamp(g - 3.0, 0.0, 1.0));
     vColor = c;
 
     // mid-transition scatter ("break into particles")
@@ -88,7 +91,7 @@ export default function WorkParticles() {
     }
 
     const geo = new THREE.BufferGeometry();
-    const names = ["aP0", "aP1", "aP2", "aP3"];
+    const names = ["aP0", "aP1", "aP2", "aP3", "aP4"];
     targets.forEach((t, i) =>
       geo.setAttribute(names[i], new THREE.BufferAttribute(t, 3))
     );

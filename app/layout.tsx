@@ -19,7 +19,13 @@ export const metadata: Metadata = {
   title: "Andi Muchlas — Backend & Spatial Systems Engineer",
   description:
     "Andi Muchlas is a backend engineer specializing in spatial computing, high-throughput APIs and distributed systems — routing engines, geospatial ETL pipelines and low-latency microservices.",
-  icons: { icon: "/assets/image/Logo.png" },
+  icons: {
+    icon: [
+      { url: "/assets/image/Logo.png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: "/assets/image/Logo.png",
+  },
 };
 
 export default function RootLayout({
