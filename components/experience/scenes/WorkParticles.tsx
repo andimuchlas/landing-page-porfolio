@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
@@ -63,14 +63,14 @@ const VERT = /* glsl */ `
     // interactive cursor repulsion + subtle vortex lift
     vec2 toParticle = pos.xy - uMouse;
     float dist = length(toParticle);
-    float radius = 1.65;
+    float radius = 2.4;
     if (dist < radius && uMouseForce > 0.001) {
       float falloff = smoothstep(radius, 0.0, dist);
       vec2 pushDir = dist > 0.001 ? normalize(toParticle) : vec2(sin(aRand * 6.28), cos(aRand * 6.28));
       vec2 swirl = vec2(-pushDir.y, pushDir.x);
-      pos.xy += (pushDir * 0.75 + swirl * 0.22) * falloff * falloff * uMouseForce * (0.7 + 0.6 * aRand);
-      pos.z += falloff * 0.85 * uMouseForce;
-      vColor = mix(vColor, vec3(1.0, 0.3, 0.0), falloff * 0.65 * uMouseForce);
+      pos.xy += (pushDir * 1.65 + swirl * 0.45) * falloff * falloff * uMouseForce * (0.75 + 0.65 * aRand);
+      pos.z += falloff * 1.4 * uMouseForce;
+      vColor = mix(vColor, vec3(1.0, 0.35, 0.05), falloff * 0.85 * uMouseForce);
     }
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
@@ -141,23 +141,40 @@ export default function WorkParticles() {
     []
   );
   const matRef = useRef(material);
+  const ndcRef = useRef({ x: 99, y: 99, active: 0 });
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      ndcRef.current.x = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+      ndcRef.current.y = -((e.clientY / Math.max(1, window.innerHeight)) * 2 - 1);
+      ndcRef.current.active = 1;
+    };
+    const onLeave = () => {
+      ndcRef.current.active = 0;
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerleave", onLeave);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
 
   useFrame((state, dt) => {
     matRef.current.uniforms.uTime.value += dt;
     matRef.current.uniforms.uProgress.value = plateau(S.work.p, WORDS.length);
 
-    // map normalized POINTER (-1..1) into particle local space at z=0, fov=40, cam z=9, group y=1.85
+    // map WebGL NDC (-1..1, +1 top) into particle local space at z=0, fov=40, cam z=9, group y=1.85
     const aspect = state.size.width / Math.max(1, state.size.height);
     const halfH = Math.tan(THREE.MathUtils.degToRad(20)) * 9;
-    const targetX = POINTER.x * halfH * aspect;
-    const targetY = POINTER.y * halfH - 1.85;
+    const targetX = ndcRef.current.x * halfH * aspect;
+    const targetY = ndcRef.current.y * halfH - 1.85;
     const uMouse = matRef.current.uniforms.uMouse.value as THREE.Vector2;
-    uMouse.x += (targetX - uMouse.x) * Math.min(1, dt * 10);
-    uMouse.y += (targetY - uMouse.y) * Math.min(1, dt * 10);
+    uMouse.x += (targetX - uMouse.x) * Math.min(1, dt * 14);
+    uMouse.y += (targetY - uMouse.y) * Math.min(1, dt * 14);
 
-    const active = Math.abs(POINTER.x) < 0.98 && Math.abs(POINTER.y) < 0.98 ? 1 : 0;
     matRef.current.uniforms.uMouseForce.value +=
-      (active - matRef.current.uniforms.uMouseForce.value) * Math.min(1, dt * 5);
+      (ndcRef.current.active - matRef.current.uniforms.uMouseForce.value) * Math.min(1, dt * 6);
 
     if (pointsRef.current) {
       pointsRef.current.rotation.x +=
