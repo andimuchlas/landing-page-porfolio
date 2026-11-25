@@ -60,17 +60,32 @@ const VERT = /* glsl */ `
     // gentle breathing so the cloud never looks frozen
     pos.y += sin(uTime * 0.7 + aRand * 40.0) * 0.03;
 
-    // interactive cursor repulsion + subtle vortex lift
+    // interactive blackhole / galaxy vortex (soft inward spiral around cursor)
     vec2 toParticle = pos.xy - uMouse;
     float dist = length(toParticle);
-    float radius = 2.4;
+    float radius = 2.0;
     if (dist < radius && uMouseForce > 0.001) {
       float falloff = smoothstep(radius, 0.0, dist);
-      vec2 pushDir = dist > 0.001 ? normalize(toParticle) : vec2(sin(aRand * 6.28), cos(aRand * 6.28));
-      vec2 swirl = vec2(-pushDir.y, pushDir.x);
-      pos.xy += (pushDir * 1.65 + swirl * 0.45) * falloff * falloff * uMouseForce * (0.75 + 0.65 * aRand);
-      pos.z += falloff * 1.4 * uMouseForce;
-      vColor = mix(vColor, vec3(1.0, 0.35, 0.05), falloff * 0.85 * uMouseForce);
+      float strength = falloff * falloff * uMouseForce;
+
+      // spiral rotation around cursor (faster closer to the core, like a galaxy)
+      float angle = strength * (2.2 + 0.5 * aRand) + strength * uTime * 0.6;
+      float cs = cos(angle);
+      float sn = sin(angle);
+      vec2 rotated = vec2(
+        toParticle.x * cs - toParticle.y * sn,
+        toParticle.x * sn + toParticle.y * cs
+      );
+
+      // gentle gravitational pull inward while preserving a small event-horizon core
+      float targetDist = max(0.14, dist * (1.0 - 0.58 * strength));
+      vec2 swirled = dist > 0.001 ? normalize(rotated) * targetDist : rotated;
+      pos.xy = uMouse + mix(toParticle, swirled, uMouseForce);
+
+      // subtle gravity well depth + warm accretion rim glow
+      pos.z -= strength * 0.65;
+      float rim = smoothstep(0.12, 0.45, dist) * smoothstep(1.2, 0.35, dist);
+      vColor = mix(vColor, vec3(1.0, 0.42, 0.1), (rim * 0.55 + strength * 0.35) * uMouseForce);
     }
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
@@ -170,8 +185,8 @@ export default function WorkParticles() {
     const targetX = ndcRef.current.x * halfH * aspect;
     const targetY = ndcRef.current.y * halfH - 1.85;
     const uMouse = matRef.current.uniforms.uMouse.value as THREE.Vector2;
-    uMouse.x += (targetX - uMouse.x) * Math.min(1, dt * 14);
-    uMouse.y += (targetY - uMouse.y) * Math.min(1, dt * 14);
+    uMouse.x += (targetX - uMouse.x) * Math.min(1, dt * 7);
+    uMouse.y += (targetY - uMouse.y) * Math.min(1, dt * 7);
 
     matRef.current.uniforms.uMouseForce.value +=
       (ndcRef.current.active - matRef.current.uniforms.uMouseForce.value) * Math.min(1, dt * 6);
