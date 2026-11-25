@@ -60,16 +60,16 @@ const VERT = /* glsl */ `
     // gentle breathing so the cloud never looks frozen
     pos.y += sin(uTime * 0.7 + aRand * 40.0) * 0.03;
 
-    // interactive blackhole / galaxy vortex (soft inward spiral around cursor)
+    // subtle local cursor gravity swirl (keeps wordmark readable)
     vec2 toParticle = pos.xy - uMouse;
     float dist = length(toParticle);
-    float radius = 2.0;
+    float radius = 0.85;
     if (dist < radius && uMouseForce > 0.001) {
       float falloff = smoothstep(radius, 0.0, dist);
       float strength = falloff * falloff * uMouseForce;
 
-      // spiral rotation around cursor (faster closer to the core, like a galaxy)
-      float angle = strength * (2.2 + 0.5 * aRand) + strength * uTime * 0.6;
+      // gentle spiral twist right around the cursor
+      float angle = strength * (1.15 + 0.25 * aRand);
       float cs = cos(angle);
       float sn = sin(angle);
       vec2 rotated = vec2(
@@ -77,15 +77,12 @@ const VERT = /* glsl */ `
         toParticle.x * sn + toParticle.y * cs
       );
 
-      // gentle gravitational pull inward while preserving a small event-horizon core
-      float targetDist = max(0.14, dist * (1.0 - 0.58 * strength));
+      float targetDist = max(0.08, dist * (1.0 - 0.32 * strength));
       vec2 swirled = dist > 0.001 ? normalize(rotated) * targetDist : rotated;
       pos.xy = uMouse + mix(toParticle, swirled, uMouseForce);
 
-      // subtle gravity well depth + warm accretion rim glow
-      pos.z -= strength * 0.65;
-      float rim = smoothstep(0.12, 0.45, dist) * smoothstep(1.2, 0.35, dist);
-      vColor = mix(vColor, vec3(1.0, 0.42, 0.1), (rim * 0.55 + strength * 0.35) * uMouseForce);
+      pos.z -= strength * 0.25;
+      vColor = mix(vColor, vec3(1.0, 0.42, 0.1), strength * 0.35);
     }
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
