@@ -21,6 +21,8 @@ const VERT = /* glsl */ `
 
   uniform float uProgress; // 0..6
   uniform float uTime;
+  uniform vec2 uMouse;      // cursor in local particle world coords
+  uniform float uMouseForce; // 0..1 smooth strength
 
   varying float vAlpha;
   varying vec3 vColor;
@@ -57,6 +59,19 @@ const VERT = /* glsl */ `
 
     // gentle breathing so the cloud never looks frozen
     pos.y += sin(uTime * 0.7 + aRand * 40.0) * 0.03;
+
+    // interactive cursor repulsion + subtle vortex lift
+    vec2 toParticle = pos.xy - uMouse;
+    float dist = length(toParticle);
+    float radius = 1.65;
+    if (dist < radius && uMouseForce > 0.001) {
+      float falloff = smoothstep(radius, 0.0, dist);
+      vec2 pushDir = dist > 0.001 ? normalize(toParticle) : vec2(sin(aRand * 6.28), cos(aRand * 6.28));
+      vec2 swirl = vec2(-pushDir.y, pushDir.x);
+      pos.xy += (pushDir * 0.75 + swirl * 0.22) * falloff * falloff * uMouseForce * (0.7 + 0.6 * aRand);
+      pos.z += falloff * 0.85 * uMouseForce;
+      vColor = mix(vColor, vec3(1.0, 0.3, 0.0), falloff * 0.65 * uMouseForce);
+    }
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
     gl_PointSize = (20.0 + 34.0 * aRand) / -mv.z;
@@ -119,6 +134,8 @@ export default function WorkParticles() {
         uniforms: {
           uProgress: { value: 0 },
           uTime: { value: 0 },
+          uMouse: { value: new THREE.Vector2(99, 99) },
+          uMouseForce: { value: 0 },
         },
       }),
     []
@@ -128,6 +145,19 @@ export default function WorkParticles() {
   useFrame((state, dt) => {
     matRef.current.uniforms.uTime.value += dt;
     matRef.current.uniforms.uProgress.value = plateau(S.work.p, WORDS.length);
+
+    // map normalized POINTER (-1..1) into particle local space at z=0, fov=40, cam z=9, group y=1.85
+    const aspect = state.size.width / Math.max(1, state.size.height);
+    const halfH = Math.tan(THREE.MathUtils.degToRad(20)) * 9;
+    const targetX = POINTER.x * halfH * aspect;
+    const targetY = POINTER.y * halfH - 1.85;
+    const uMouse = matRef.current.uniforms.uMouse.value as THREE.Vector2;
+    uMouse.x += (targetX - uMouse.x) * Math.min(1, dt * 10);
+    uMouse.y += (targetY - uMouse.y) * Math.min(1, dt * 10);
+
+    const active = Math.abs(POINTER.x) < 0.98 && Math.abs(POINTER.y) < 0.98 ? 1 : 0;
+    matRef.current.uniforms.uMouseForce.value +=
+      (active - matRef.current.uniforms.uMouseForce.value) * Math.min(1, dt * 5);
 
     if (pointsRef.current) {
       pointsRef.current.rotation.x +=

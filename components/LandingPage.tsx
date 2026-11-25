@@ -9,6 +9,7 @@ import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/ui/Hero";
 import Services from "@/components/ui/Services";
 import Work from "@/components/ui/Work";
+import ExperienceSection from "@/components/ui/ExperienceSection";
 import Toolbox from "@/components/ui/Toolbox";
 import GameSection from "@/components/ui/GameSection";
 import Finale from "@/components/ui/Finale";
@@ -27,6 +28,7 @@ export default function LandingPage() {
           <Hero />
           <Work />
           <Services />
+          <ExperienceSection />
           <Toolbox />
           <GameSection />
           <Finale />

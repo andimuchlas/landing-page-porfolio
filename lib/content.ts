@@ -62,11 +62,11 @@ export const FEATURED: Project[] = [
     index: "02",
     collection: "featured",
     name: "LUWES STATION",
-    tag: "Flood early warning & watershed monitoring.",
-    desc: "Early-warning monitoring platform for hydrological stations, threshold alarms, and watershed mapping across web, backend, and mobile.",
+    tag: "Weather station & flood early warning.",
+    desc: "Weather station and early-warning monitoring platform for hydrological/weather stations, threshold alarms, and watershed mapping across web, backend, and mobile.",
     role: "FULL-STACK & MOBILE ENGINEER",
     status: "PRIVATE / PRODUCTION",
-    type: "EWS / SPATIAL",
+    type: "WEATHER STATION / EWS",
     stack: [
       "NEXT.JS 16",
       "NESTJS",
@@ -285,12 +285,80 @@ export const ARCHIVE: Project[] = [
       href: "https://andimuchlas.itch.io/the-search-of-eldoria",
     },
   },
+  {
+    id: "radarharga",
+    index: "E",
+    collection: "archive",
+    name: "RADAR HARGA",
+    tag: "E-commerce price intelligence & merchant margin hub.",
+    desc: "Dual-portal B2C price radar and B2B merchant fee/margin calculator for major Indonesian marketplaces.",
+    role: "FULL-STACK ENGINEER",
+    status: "LIVE",
+    type: "FULL-STACK WEB",
+    stack: ["NEXT.JS", "TYPESCRIPT", "POSTGRESQL", "DRIZZLE ORM", "VITEST"],
+    highlights: [
+      "Integer-based stepwise fee calculations with 28/28 Vitest unit tests.",
+      "Bot-filtered click tracking and 94%+ SEO audit score with JSON-LD.",
+    ],
+    link: { label: "LIVE", href: "https://www.radarharga.shop" },
+  },
 ];
 
 export const ALL_PROJECTS: Project[] = [...FEATURED, ...ARCHIVE];
 
 export const findProject = (id: string) =>
   ALL_PROJECTS.find((p) => p.id === id);
+
+export type ExperienceItem = {
+  company: string;
+  role: string;
+  period: string;
+  type: string;
+  summary: string;
+};
+
+export const EXPERIENCE: ExperienceItem[] = [
+  {
+    company: "PT LUWES INOVASI MANDIRI",
+    role: "Full-Stack Engineer (Web & Mobile)",
+    period: "OCT 2026 – PRESENT",
+    type: "FULL-TIME",
+    summary:
+      "Building two location-based products end-to-end across Next.js, NestJS, PostGIS, and Flutter: GoAgri (plantation platform) and Luwes Station (weather station & flood early-warning system).",
+  },
+  {
+    company: "MOLCA TEKNOLOGI NUSANTARA",
+    role: "Interactive Software Engineer",
+    period: "JUN 2026 – SEP 2026",
+    type: "REMOTE CONTRACT",
+    summary:
+      "Developed modular interactive simulation systems in C# (Unity) with decoupled component architecture and optimized runtime memory/frame loops.",
+  },
+  {
+    company: "PT LINTAS CAKRA CIPTA",
+    role: "Software Engineer (Backend & Web Systems)",
+    period: "SEP 2025 – OCT 2026",
+    type: "FULL-TIME",
+    summary:
+      "Engineered Go/TypeScript backend services, optimized PostGIS spatial queries sustaining sub-second SLAs, and integrated interactive Leaflet mapping apps.",
+  },
+  {
+    company: "AUTOMATA VISUAL",
+    role: "Software Engineer (IoT & Interactive Systems)",
+    period: "SEP 2024 – FEB 2025",
+    type: "PROJECT CONTRACT",
+    summary:
+      "Built an IoT interactive display at the Disaster Room of Geological Museum Bandung, turning raw LiDAR telemetry into real-time C# touch detection.",
+  },
+  {
+    company: "UVISUAL STUDIO",
+    role: "Software Engineer (Web & Interactive Systems)",
+    period: "AUG 2023 – SEP 2024",
+    type: "FREELANCE",
+    summary:
+      "Built Gephyrion, a full-stack real-time platform linking a PHP/MySQL web app with multi-projector Unity displays via WebSockets at 60 FPS.",
+  },
+];
 
 /* -------------------------------- toolbox -------------------------------- */
 
@@ -301,25 +369,27 @@ export type Tech = {
 };
 
 export const TECHS: Tech[] = [
+  { name: "NEXT.JS", desc: "App Router web platforms, BFF proxies & PWA frontends.", projects: ["GOAGRI", "LUWES STATION", "RADAR HARGA"] },
+  { name: "FLUTTER", desc: "Cross-platform mobile apps with 120Hz performance & native maps.", projects: ["GOAGRI", "LUWES STATION"] },
+  { name: "NESTJS", desc: "Modular TypeScript APIs on Fastify with Kysely & PostGIS.", projects: ["GOAGRI", "LUWES STATION"] },
   { name: "GO", desc: "Core engine services, graph computation & low-latency workers.", projects: ["RAJADEREK"] },
-  { name: "TYPESCRIPT", desc: "End-to-end type-safe gateways, services & tooling.", projects: ["RAJADEREK", "GENSET", "CASANELA"] },
-  { name: "NODE.JS", desc: "API layers and background pipelines.", projects: ["GENSET", "PDF ENGINE"] },
-  { name: "BUN", desc: "High-performance HTTP runtime for hot paths.", projects: ["CASANELA"] },
-  { name: "HONO.JS", desc: "Ultrafast HTTP framework of choice.", projects: ["GENSET", "CASANELA"] },
-  { name: "PYTHON", desc: "Spatial ETL, scraping & ML tooling.", projects: ["RAJADEREK", "LLM ROUTER"] },
-  { name: "POSTGIS", desc: "Spatial source of truth with bounded GiST strategies.", projects: ["RAJADEREK", "CASANELA"] },
+  { name: "TYPESCRIPT", desc: "End-to-end type-safe gateways, services & web apps.", projects: ["GOAGRI", "LUWES STATION", "RAJADEREK", "GENSET", "CASANELA"] },
+  { name: "POSTGIS", desc: "Spatial source of truth with bounded GiST strategies.", projects: ["GOAGRI", "LUWES STATION", "RAJADEREK"] },
+  { name: "TIMESCALEDB", desc: "Time-series sensor telemetry & hypertables for weather stations.", projects: ["LUWES STATION"] },
   { name: "UBER H3", desc: "O(1) hexagonal proximity indexing.", projects: ["RAJADEREK"] },
   { name: "OSRM", desc: "Self-hosted routing with Multi-Level Dijkstra.", projects: ["RAJADEREK"] },
   { name: "GRPC", desc: "Typed transport between gateway and core engine.", projects: ["RAJADEREK"] },
+  { name: "BUN", desc: "High-performance HTTP runtime for hot paths.", projects: ["CASANELA"] },
+  { name: "HONO.JS", desc: "Ultrafast HTTP framework of choice.", projects: ["GENSET", "CASANELA"] },
+  { name: "PYTHON", desc: "Spatial ETL, scraping & ML tooling.", projects: ["RAJADEREK", "LLM ROUTER"] },
   { name: "NATS", desc: "Lightweight messaging backbone.", projects: ["RAJADEREK"] },
   { name: "BULLMQ", desc: "Distributed job pipelines on Redis.", projects: ["GENSET", "CASANELA"] },
-  { name: "REDIS", desc: "Cache, queues and proximity state.", projects: ["RAJADEREK", "GENSET", "CASANELA"] },
+  { name: "REDIS", desc: "Cache, queues and proximity state.", projects: ["GOAGRI", "RAJADEREK", "GENSET", "CASANELA"] },
   { name: "KUBERNETES", desc: "Orchestrating production workloads.", projects: ["RAJADEREK"] },
   { name: "AWS", desc: "S3 presigned flows & cloud infrastructure.", projects: ["GENSET", "CASANELA"] },
   { name: "UNITY", desc: "Games, XR and realtime installations.", projects: ["AI AVATAR UNITY", "GEPHYRION", "ELDORIA"] },
-  { name: "DOCKER", desc: "Containerized voice-processing backend services.", projects: ["AI AVATAR UNITY"] },
-  { name: "N8N", desc: "Event-driven workflow automation & webhook integrations.", projects: ["AUTOMATION"] },
-  { name: "LLM ORCHESTRATION", desc: "Model routing, function calling & agentic workflows.", projects: ["LLM ROUTER"] },
+  { name: "DOCKER", desc: "Containerized backend & AI services.", projects: ["GOAGRI", "LUWES STATION", "AI AVATAR UNITY"] },
+  { name: "LLM ORCHESTRATION", desc: "RAG streaming, model routing & agentic workflows.", projects: ["GOAGRI", "LLM ROUTER"] },
 ];
 
 export type Cert = { name: string; href: string };

@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { lockPageScroll, scrollTo } from "@/components/SmoothScroll";
 
 const LINKS = [
-  { label: "EXPERTISE", href: "#services" },
   { label: "WORK", href: "#work" },
-  { label: "PROCESS", href: "#process" },
+  { label: "EXPERTISE", href: "#services" },
+  { label: "EXPERIENCE", href: "#experience" },
   { label: "WORLDS", href: "#game" },
 ];
 
