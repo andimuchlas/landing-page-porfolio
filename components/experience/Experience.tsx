@@ -17,7 +17,7 @@ export default function Experience({
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
       <Canvas
         eventSource={source as React.RefObject<HTMLElement>}
-        dpr={[1, 2]}
+        dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         camera={{ fov: 45, position: [0, 0, 8], near: 0.1, far: 160 }}
       >

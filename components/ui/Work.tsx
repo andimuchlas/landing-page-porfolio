@@ -362,7 +362,67 @@ function LlmRouterMock() {
   );
 }
 
+function GoAgriMock() {
+  return (
+    <WindowFrame title="GOAGRI · PLANTATION GIS">
+      <div className="flex h-full flex-col justify-between p-4 font-tech text-[10px]">
+        <div className="flex items-center justify-between border-b border-white/10 pb-2 text-dim">
+          <span>BLOCK MAP · POSTGIS</span>
+          <span className="text-accent">AI RAG · ACTIVE</span>
+        </div>
+        <div className="my-3 grid grid-cols-3 gap-2">
+          {[
+            ["BLOCKS", "MAPPED"],
+            ["MOBILE", "FLUTTER"],
+            ["API", "NESTJS BFF"],
+          ].map(([k, v]) => (
+            <div key={k} className="border border-white/10 bg-white/[0.02] p-2">
+              <div className="text-[8px] text-dim">{k}</div>
+              <div className="mt-1 font-bold text-ink">{v}</div>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-between text-[9px] text-dim">
+          <span>luwesagri.com</span>
+          <span className="text-ink">FIELD TRACKING · SCHEDULE</span>
+        </div>
+      </div>
+    </WindowFrame>
+  );
+}
+
+function LuwesStationMock() {
+  return (
+    <WindowFrame title="LUWES STATION · EWS">
+      <div className="flex h-full flex-col justify-between p-4 font-tech text-[10px]">
+        <div className="flex items-center justify-between border-b border-white/10 pb-2 text-dim">
+          <span>WATERSHED · AWLR / ARR / AWS</span>
+          <span className="text-accent">TELEMETRY OK</span>
+        </div>
+        <div className="my-3 grid grid-cols-3 gap-2">
+          {[
+            ["STATIONS", "REALTIME"],
+            ["MAPS", "CACHED"],
+            ["EXPORT", "CSV + PWA"],
+          ].map(([k, v]) => (
+            <div key={k} className="border border-white/10 bg-white/[0.02] p-2">
+              <div className="text-[8px] text-dim">{k}</div>
+              <div className="mt-1 font-bold text-ink">{v}</div>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-between text-[9px] text-dim">
+          <span>station.luwesinovasimandiri.com</span>
+          <span className="text-ink">ALARMS · DAS</span>
+        </div>
+      </div>
+    </WindowFrame>
+  );
+}
+
 const MOCKS: Record<string, () => React.ReactElement> = {
+  goagri: GoAgriMock,
+  "luwes-station": LuwesStationMock,
   rajaderek: RajaderekMock,
   aiavatar: AiAvatarMock,
   genset: GensetMock,

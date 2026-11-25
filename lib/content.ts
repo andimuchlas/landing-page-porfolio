@@ -5,7 +5,7 @@
 
 export const LINKS = {
   email: "andimuchlas156@gmail.com",
-  linkedin: "https://www.linkedin.com/in/andi-m-489b61248/",
+  linkedin: "https://www.linkedin.com/in/andimuchlas/",
   website: "https://andi.is-a.dev",
   gcpProfile:
     "https://www.skills.google/public_profiles/104038eb-cdaa-4a54-8bf4-4d575ae2c783",
@@ -32,8 +32,59 @@ export type Project = {
 
 export const FEATURED: Project[] = [
   {
-    id: "rajaderek",
+    id: "goagri",
     index: "01",
+    collection: "featured",
+    name: "GOAGRI",
+    tag: "Map-based precision agriculture platform.",
+    desc: "Plantation management platform spanning web (Next.js BFF), backend (NestJS/Fastify, PostGIS), and Android mobile (Flutter).",
+    role: "FULL-STACK & MOBILE ENGINEER",
+    status: "PRIVATE / PRODUCTION",
+    type: "SPATIAL PLATFORM",
+    stack: [
+      "NEXT.JS 16",
+      "NESTJS",
+      "FASTIFY",
+      "POSTGIS",
+      "KYSELY",
+      "REDIS",
+      "FLUTTER",
+    ],
+    highlights: [
+      "Built the AI assistant for farmers (streaming chat + RAG knowledge base), discussion forum, broadcast notifications, field tracking, and block-level scheduling.",
+      "Delivered Flutter mobile features including native photo watermarking, map views, and smoother daily field workflows.",
+      "Overhauled web and mobile UI/UX for consistency, responsiveness, and clear save/error feedback.",
+    ],
+    link: { label: "LIVE", href: "https://luwesagri.com/" },
+  },
+  {
+    id: "luwes-station",
+    index: "02",
+    collection: "featured",
+    name: "LUWES STATION",
+    tag: "Flood early warning & watershed monitoring.",
+    desc: "Early-warning monitoring platform for hydrological stations, threshold alarms, and watershed mapping across web, backend, and mobile.",
+    role: "FULL-STACK & MOBILE ENGINEER",
+    status: "PRIVATE / PRODUCTION",
+    type: "EWS / SPATIAL",
+    stack: [
+      "NEXT.JS 16",
+      "NESTJS",
+      "TIMESCALEDB",
+      "POSTGIS",
+      "FLUTTER",
+      "DART",
+    ],
+    highlights: [
+      "Built the Flutter mobile application from scratch with smooth 120Hz performance, native camera/GPS workflows, and fast cached maps.",
+      "Delivered web and API modules including weather catalog, CSV data export, station pinpointing, email broadcasts, password reset, and PWA support.",
+      "Refined mobile/desktop views, map tile caching, and API error handling across services.",
+    ],
+    link: { label: "LIVE", href: "https://station.luwesinovasimandiri.com/" },
+  },
+  {
+    id: "rajaderek",
+    index: "03",
     collection: "featured",
     name: "RAJADEREK",
     tag: "Real-time spatial routing & logistics.",
@@ -59,6 +110,7 @@ export const FEATURED: Project[] = [
       "Replaced slow polygon intersection with Uber H3 hexagonal indexing — O(1) cell lookup for instant driver-to-job proximity matching.",
       "OSRM configured with Multi-Level Dijkstra for dynamic toll-road weighting; reused Go JSON decoders and slice buffers via sync.Pool to minimize GC latency spikes.",
     ],
+    link: { label: "WEBSITE (OPS PRIVATE)", href: "https://www.rajaderek.com/" },
   },
   {
     id: "aiavatar",
@@ -134,10 +186,11 @@ export const FEATURED: Project[] = [
       "AWS S3",
     ],
     highlights: [
-      "Built on Bun + Hono.js for sub-millisecond route handling and high concurrent request capacity.",
+      "Built on Bun + Hono.js for minimal routing overhead and high concurrent request capacity.",
       "Automated two-way OTA channel synchronization (HotelMu) and booking timeout management via BullMQ queues.",
       "S3 Presigned URL workflows for direct media uploads, bypassing backend proxy bottlenecks.",
     ],
+    link: { label: "LIVE", href: "https://casanelavilla.com/" },
   },
   {
     id: "llmrouter",
@@ -277,7 +330,7 @@ export const TECHS: Tech[] = [
   { name: "GO", desc: "Core engine services, graph computation & low-latency workers.", projects: ["RAJADEREK"] },
   { name: "TYPESCRIPT", desc: "End-to-end type-safe gateways, services & tooling.", projects: ["RAJADEREK", "GENSET", "CASANELA"] },
   { name: "NODE.JS", desc: "API layers and background pipelines.", projects: ["GENSET", "PDF ENGINE"] },
-  { name: "BUN", desc: "Sub-millisecond HTTP runtime for hot paths.", projects: ["CASANELA"] },
+  { name: "BUN", desc: "High-performance HTTP runtime for hot paths.", projects: ["CASANELA"] },
   { name: "HONO.JS", desc: "Ultrafast HTTP framework of choice.", projects: ["GENSET", "CASANELA"] },
   { name: "PYTHON", desc: "Spatial ETL, scraping & ML tooling.", projects: ["RAJADEREK", "LLM ROUTER"] },
   { name: "POSTGIS", desc: "Spatial source of truth with bounded GiST strategies.", projects: ["RAJADEREK", "CASANELA"] },
@@ -291,6 +344,8 @@ export const TECHS: Tech[] = [
   { name: "AWS", desc: "S3 presigned flows & cloud infrastructure.", projects: ["GENSET", "CASANELA"] },
   { name: "UNITY", desc: "Games, XR and realtime installations.", projects: ["AI AVATAR UNITY", "GEPHYRION", "ELDORIA"] },
   { name: "DOCKER", desc: "Containerized voice-processing backend services.", projects: ["AI AVATAR UNITY"] },
+  { name: "N8N", desc: "Event-driven workflow automation & webhook integrations.", projects: ["AUTOMATION"] },
+  { name: "LLM ORCHESTRATION", desc: "Model routing, function calling & agentic workflows.", projects: ["LLM ROUTER"] },
 ];
 
 export type Cert = { name: string; href: string };

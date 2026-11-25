@@ -6,6 +6,7 @@ import "./globals.css";
 
 const archivo = Archivo({
   subsets: ["latin"],
+  weight: "variable",
   variable: "--font-archivo",
   axes: ["wdth"],
 });
@@ -16,9 +17,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Andi Muchlas — Backend & Spatial Systems Engineer",
+  title: "Andi Muchlas — Full-Stack & Spatial Systems Engineer",
   description:
-    "Andi Muchlas is a backend engineer specializing in spatial computing, high-throughput APIs and distributed systems — routing engines, geospatial ETL pipelines and low-latency microservices.",
+    "Andi Muchlas is a Full-Stack & Spatial Systems Engineer building location-based web and mobile applications, high-throughput APIs, and distributed geospatial systems.",
   icons: {
     icon: [
       { url: "/assets/image/Logo.png" },

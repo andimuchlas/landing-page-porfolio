@@ -25,32 +25,31 @@ export default function Hero() {
       const playEntrance = () => {
         gsap.fromTo(
           ".hero-line",
-          { yPercent: 120, opacity: 0, filter: "blur(14px)" },
+          { yPercent: 100, opacity: 0 },
           {
             yPercent: 0,
             opacity: 1,
-            filter: "blur(0px)",
-            duration: rm ? 0 : 1.4,
-            stagger: rm ? 0 : 0.12,
+            duration: rm ? 0 : 1.0,
+            stagger: rm ? 0 : 0.1,
             ease: "power4.out",
-            delay: 0.25,
+            delay: 0.15,
           }
         );
         gsap.fromTo(
           ".hero-fade",
-          { opacity: 0, y: 16 },
+          { opacity: 0, y: 12 },
           {
             opacity: 1,
             y: 0,
-            duration: rm ? 0 : 1.2,
-            stagger: rm ? 0 : 0.15,
-            delay: 1.0,
+            duration: rm ? 0 : 0.9,
+            stagger: rm ? 0 : 0.12,
+            delay: 0.65,
           }
         );
       };
       offReady = onReady(() => gsap.delayedCall(0.05, playEntrance));
 
-      // scroll-driven portal sequence
+      // clean scroll-driven exit (no jarring white flash)
       gsap
         .timeline({
           scrollTrigger: {
@@ -63,16 +62,15 @@ export default function Hero() {
         .fromTo(
           h1.current,
           { scale: 1 },
-          { scale: 1.3, ease: "none", duration: 0.6 },
+          { scale: 1.12, ease: "none", duration: 0.7 },
           0
         )
         .to(
           ".hero-line",
-          { opacity: 0, yPercent: -18, stagger: 0.05, duration: 0.3 },
-          0.22
+          { opacity: 0, yPercent: -14, stagger: 0.04, duration: 0.35 },
+          0.35
         )
-        .to(".hero-fade", { opacity: 0, duration: 0.2 }, 0.15)
-        .to(flash.current, { opacity: 1, duration: 0.16, ease: "power2.in" }, 0.82)
+        .to(".hero-fade", { opacity: 0, duration: 0.25 }, 0.25)
         .set({}, {}, 1);
 
       ScrollTrigger.create({
@@ -92,7 +90,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={section} id="hero" className="relative h-[340vh]">
+    <section ref={section} id="hero" className="relative h-[200vh]">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <View className="absolute inset-0">
           <HeroLogo />
@@ -100,20 +98,20 @@ export default function Hero() {
 
         <div className="pointer-events-none relative z-10 px-6 text-center">
           <p className="hero-fade mb-8 font-tech text-[11px] tracking-[0.35em] text-dim md:text-xs">
-            [ ANDI MUCHLAS — BACKEND & SPATIAL SYSTEMS ENGINEER ]
+            [ ANDI MUCHLAS — FULL-STACK & SPATIAL SYSTEMS ENGINEER ]
           </p>
           <h1
             ref={h1}
-            className="font-display font-expanded text-[clamp(3rem,11vw,9.5rem)] leading-[0.92] tracking-tight"
+            className="font-display font-expanded font-black text-[clamp(3.2rem,11.5vw,10rem)] leading-[0.88] tracking-[-0.03em] text-ink"
           >
             <span className="hero-line block">I BUILD</span>
-            <span className="hero-line text-chrome block">SYSTEMS</span>
+            <span className="hero-line block text-ink">SYSTEMS</span>
             <span className="hero-line block">
               THAT SCALE<span className="text-accent">.</span>
             </span>
           </h1>
           <p className="hero-fade mx-auto mt-10 max-w-md font-tech text-xs leading-relaxed text-dim">
-            SPATIAL COMPUTING · HIGH-THROUGHPUT APIS · DISTRIBUTED SYSTEMS
+            SPATIAL SYSTEMS · WEB & MOBILE APPS · HIGH-THROUGHPUT BACKENDS
           </p>
 
           <div className="hero-fade pointer-events-auto mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-4">
