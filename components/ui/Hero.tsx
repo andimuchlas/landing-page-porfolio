@@ -105,7 +105,7 @@ export default function Hero() {
             className="font-display font-expanded font-black text-[clamp(3.2rem,11.5vw,10rem)] leading-[0.88] tracking-[-0.03em] text-ink"
           >
             <span className="hero-line block">I BUILD</span>
-            <span className="hero-line block text-ink">SYSTEMS</span>
+            <span className="hero-line text-chrome block">SYSTEMS</span>
             <span className="hero-line block">
               THAT SCALE<span className="text-accent">.</span>
             </span>

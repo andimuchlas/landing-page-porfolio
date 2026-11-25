@@ -537,7 +537,74 @@ export default function Work() {
         </div>
       </header>
 
-      {/* archive grid */}
+      <div ref={panels} className="relative">
+        {/* single sticky particle layer behind all panels */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="sticky top-0 h-screen">
+            <View className="absolute inset-0">
+              <WorkParticles />
+            </View>
+          </div>
+        </div>
+
+        {FEATURED.map((p) => {
+          const Mock = MOCKS[p.id];
+          return (
+            <div
+              key={p.id}
+              className="work-panel sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-16"
+            >
+              <div className="relative z-10 grid w-full items-center gap-6 sm:gap-8 md:grid-cols-2 md:gap-10">
+                <div className="work-info pointer-events-none will-change-[opacity]">
+                  <p className="font-tech text-xs tracking-[0.3em]" style={{ color: "#9a9da6" }}>
+                    PROJECT {p.index} / {String(FEATURED.length).padStart(2, "0")}
+                  </p>
+                  <h3 className="text-outline mt-2 font-display text-[clamp(2.4rem,9vw,6rem)] font-black leading-none md:mt-3">
+                    {p.name}
+                  </h3>
+                  <p className="mt-3 max-w-sm text-sm text-dim">{p.tag}</p>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 font-tech text-[10px] tracking-[0.2em] text-dim md:mt-6">
+                    <span>{p.role}</span>
+                    <span>{p.status}</span>
+                    <span className="flex gap-2">
+                      {p.stack.slice(0, 4).map((s) => (
+                        <span key={s} className="rounded border border-white/15 px-2 py-0.5">
+                          {s}
+                        </span>
+                      ))}
+                      {p.stack.length > 4 && (
+                        <span className="rounded border border-white/15 px-2 py-0.5">
+                          +{p.stack.length - 4}
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setOpenId(p.id)}
+                    className="group pointer-events-auto mt-5 inline-flex items-center gap-2 font-tech text-[11px] tracking-[0.3em] text-ink/80 transition-colors hover:text-accent md:mt-7"
+                  >
+                    VIEW CASE STUDY
+                    <span aria-hidden className="text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpenId(p.id)}
+                  aria-label={`Open ${p.name} case study`}
+                  className="work-mock group block w-full cursor-pointer will-change-[transform,opacity] [perspective:900px]"
+                >
+                  <div className="origin-center transition-transform duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.02]">
+                    <Mock />
+                  </div>
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* archive grid — below main featured builds */}
       <div className="relative z-10 border-y border-white/8 bg-bg/70 px-6 py-24 backdrop-blur-sm md:px-16">
         <div className="mx-auto max-w-6xl">
           <p className="font-tech text-[11px] tracking-[0.35em] text-dim">
@@ -585,73 +652,6 @@ export default function Work() {
             REQUEST.
           </p>
         </div>
-      </div>
-
-      <div ref={panels} className="relative">
-        {/* single sticky particle layer behind all panels */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="sticky top-0 h-screen">
-            <View className="absolute inset-0">
-              <WorkParticles />
-            </View>
-          </div>
-        </div>
-
-        {FEATURED.map((p) => {
-          const Mock = MOCKS[p.id];
-          return (
-            <div
-              key={p.id}
-              className="work-panel sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-16"
-            >
-              <div className="relative z-10 grid w-full items-center gap-6 sm:gap-8 md:grid-cols-2 md:gap-10">
-                <div className="work-info pointer-events-none will-change-[opacity]">
-                  <p className="font-tech text-xs tracking-[0.3em]" style={{ color: "#9a9da6" }}>
-                    PROJECT {p.index} / {String(FEATURED.length).padStart(2, "0")}
-                  </p>
-                  <h3 className="text-outline mt-2 font-display text-[clamp(2.4rem,9vw,6rem)] font-black leading-none md:mt-3">
-                    {p.name}
-                  </h3>
-                  <p className="mt-3 max-w-sm text-sm text-dim">{p.tag}</p>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 font-tech text-[10px] tracking-[0.2em] text-dim md:mt-6">
-                    <span>{p.role}</span>
-                    <span>{p.status}</span>
-                    <span className="flex gap-2">
-                      {p.stack.slice(0, 4).map((s) => (
-                        <span key={s} className="rounded border border-white/15 px-2 py-0.5">
-                          {s}
-                        </span>
-                      ))}
-                      {p.stack.length > 4 && (
-                        <span className="rounded border border-white/15 px-2 py-0.5">
-                          +{p.stack.length - 4}
-                        </span>
-                      )}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setOpenId(p.id)}
-                    className="group mt-5 inline-flex items-center gap-2 font-tech text-[11px] tracking-[0.3em] text-ink/80 transition-colors hover:text-accent md:mt-7"
-                  >
-                    VIEW CASE STUDY
-                    <span aria-hidden className="text-accent transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
-                  </button>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setOpenId(p.id)}
-                  aria-label={`Open ${p.name} case study`}
-                  className="work-mock group block w-full cursor-pointer will-change-[transform,opacity] [perspective:900px]"
-                >
-                  <div className="origin-center transition-transform duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.02]">
-                    <Mock />
-                  </div>
-                </button>
-              </div>
-            </div>
-          );
-        })}
       </div>
 
       {project && (

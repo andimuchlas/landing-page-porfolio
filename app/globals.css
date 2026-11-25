@@ -54,6 +54,24 @@ body {
   font-weight: 700;
 }
 
+.text-chrome {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #c3c8d2 38%,
+    #5d626c 55%,
+    #eceef2 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 243, 245, 0.22);
+}
+
 /* ---------- surfaces ---------- */
 
 .grid-lines {

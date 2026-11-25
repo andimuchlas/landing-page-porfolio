@@ -14,6 +14,7 @@ export default function HeroLogo() {
   const parallax = useRef<THREE.Group>(null);
   const spinGroup = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Mesh>(null);
+  const outerRing = useRef<THREE.Mesh>(null);
 
   const { scene } = useGLTF(LOGO_URL);
 
@@ -59,8 +60,15 @@ export default function HeroLogo() {
     for (const m of matsRef.current) m.opacity = fade;
 
     if (ring.current) {
-      ring.current.rotation.x = Math.PI / 2.4 + t * 0.1;
-      const m = ring.current.material as THREE.MeshBasicMaterial;
+      ring.current.rotation.x = Math.PI / 2.4 + t * 0.12;
+      ring.current.rotation.y = t * 0.08;
+      const m = ring.current.material as THREE.MeshStandardMaterial;
+      m.opacity = 0.45 * fade;
+    }
+    if (outerRing.current) {
+      outerRing.current.rotation.x = -Math.PI / 3.2 - t * 0.07;
+      outerRing.current.rotation.z = t * 0.05;
+      const m = outerRing.current.material as THREE.MeshStandardMaterial;
       m.opacity = 0.22 * fade;
     }
   });
@@ -68,13 +76,17 @@ export default function HeroLogo() {
   return (
     <>
       <StudioEnv />
-      <PerspectiveCamera makeDefault fov={42} position={[0, 0, 7]} near={0.1} far={60} />
-      <group ref={parallax}>
+      <PerspectiveCamera makeDefault fov={40} position={[0, 0, 7.6]} near={0.1} far={60} />
+      <group ref={parallax} position={[0, 0.12, -0.5]}>
         <group ref={spinGroup}>
-          <primitive object={model} scale={1.35} />
+          <primitive object={model} scale={1.18} />
           <mesh ref={ring}>
-            <torusGeometry args={[2.3, 0.008, 8, 128]} />
-            <meshBasicMaterial color="#ff4d00" transparent opacity={0.22} />
+            <torusGeometry args={[2.15, 0.014, 16, 160]} />
+            <meshStandardMaterial color="#ff4d00" metalness={0.85} roughness={0.2} transparent opacity={0.45} />
+          </mesh>
+          <mesh ref={outerRing}>
+            <torusGeometry args={[2.65, 0.008, 12, 160]} />
+            <meshStandardMaterial color="#f2f1ec" metalness={0.9} roughness={0.25} transparent opacity={0.22} />
           </mesh>
         </group>
       </group>

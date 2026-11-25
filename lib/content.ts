@@ -114,7 +114,7 @@ export const FEATURED: Project[] = [
   },
   {
     id: "aiavatar",
-    index: "02",
+    index: "04",
     collection: "featured",
     name: "AI AVATAR UNITY",
     tag: "End-to-End AI & Real-Time Interactive System.",
@@ -141,7 +141,7 @@ export const FEATURED: Project[] = [
   },
   {
     id: "genset",
-    index: "03",
+    index: "05",
     collection: "featured",
     name: "GENSET MANAGEMENT",
     tag: "Enterprise equipment rental & field maintenance backend.",
@@ -167,7 +167,7 @@ export const FEATURED: Project[] = [
   },
   {
     id: "casanela",
-    index: "04",
+    index: "06",
     collection: "featured",
     name: "CASANELA VILLA API",
     tag: "High-throughput reservation engine.",
@@ -194,7 +194,7 @@ export const FEATURED: Project[] = [
   },
   {
     id: "llmrouter",
-    index: "05",
+    index: "07",
     collection: "featured",
     name: "LLM INTENT ROUTER",
     tag: "Intelligent model orchestration layer.",
@@ -284,32 +284,6 @@ export const ARCHIVE: Project[] = [
       label: "PLAY ON ITCH.IO ↗",
       href: "https://andimuchlas.itch.io/the-search-of-eldoria",
     },
-  },
-  {
-    id: "chatvibes",
-    index: "E",
-    collection: "archive",
-    name: "CHATVIBES",
-    tag: "Realtime group chat app.",
-    desc: "Group chat mobile app — register, sign in, join or create chat groups and interact in real time, with intuitive flows and smooth state management.",
-    role: "MOBILE DEVELOPER",
-    status: "PROTOTYPE",
-    type: "MOBILE APP",
-    stack: ["FLUTTER", "FIREBASE"],
-    highlights: ["Realtime messaging backed by Firebase auth and Firestore."],
-  },
-  {
-    id: "hauntedmansion",
-    index: "F",
-    collection: "archive",
-    name: "HAUNTED MANSION",
-    tag: "Horror game prototype.",
-    desc: "Prototype horror game made with the Unity engine — atmosphere-first exploration and tension pacing.",
-    role: "GAME PROGRAMMER",
-    status: "PROTOTYPE",
-    type: "GAME",
-    stack: ["UNITY", "C#"],
-    highlights: ["Prototype built to explore horror pacing and level design."],
   },
 ];
 
